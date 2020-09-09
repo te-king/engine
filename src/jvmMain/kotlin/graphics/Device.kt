@@ -1,6 +1,5 @@
 package graphics
 
-
 actual class Device {
 
     actual fun createBuffer(): Buffer {

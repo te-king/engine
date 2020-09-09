@@ -11,13 +11,21 @@ kotlin {
         browser()
         binaries.executable()
     }
-    mingwX64("native") {
-        binaries.executable()
+    jvm {
+
     }
+//    mingwX64("native") {
+//        binaries.executable()
+//    }
 
     sourceSets {
         commonMain {}
         jsMain {}
+        jvmMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.0'
+            }
+        }
         all {
             languageSettings.enableLanguageFeature("InlineClasses")
         }

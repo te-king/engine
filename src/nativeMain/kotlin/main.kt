@@ -4,12 +4,15 @@ import math.Float4x4
 
 import platform.opengl32.*
 import world.Scene
+import world.controllers.GraphicsContext
 
 fun main() {
 
-    val device = Device()
+    val scene = Scene()
 
-    device.draw {
+    scene.node {
+
+
 
     }
 

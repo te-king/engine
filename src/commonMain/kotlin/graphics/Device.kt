@@ -3,7 +3,7 @@ package graphics
 
 expect class Device {
 
-    fun createBuffer()
+    fun createBuffer(): Buffer
 
     fun createTexture()
 
@@ -15,4 +15,4 @@ expect class Device {
 }
 
 
-inline fun Device.draw(fn: DrawCommandBuffer.() -> Unit) = createDrawCommandBuffer().also(fn).submit()
+inline fun Device.draw(crossinline fn: DrawCommandBuffer.() -> Unit) = createDrawCommandBuffer().also(fn).submit()
