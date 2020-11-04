@@ -1,5 +1,6 @@
 package world.controllers
 
+import extensions.componentsOfType
 import world.Scene
 import world.components.Component
 import kotlin.properties.ReadOnlyProperty
@@ -7,10 +8,10 @@ import kotlin.properties.ReadOnlyProperty
 
 abstract class Controller(val scene: Scene) {
 
-    protected inline fun <reified T : Component> component() =
-        ReadOnlyProperty<Component, Sequence<T>> { _, _ -> scene.nodes.flatMap { it.components }.filterIsInstance<T>() }
+    protected inline fun <reified T> components() =
+        ReadOnlyProperty<Controller, Sequence<T>> { _, _ -> scene.componentsOfType<T>() }
 
     protected inline fun <reified T : Controller> controller() =
-        ReadOnlyProperty<Component, T> { _, _ -> scene.add(T::class) }
+        ReadOnlyProperty<Controller, T> { _, _ -> scene.add(T::class) }
 
 }

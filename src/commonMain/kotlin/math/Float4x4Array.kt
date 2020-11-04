@@ -1,6 +1,7 @@
 package math
 
-inline class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
+
+class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
 
     constructor(size: Int) : this(FloatArray(size * (4 * 4)))
 
@@ -57,3 +58,6 @@ inline class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
     }
 
 }
+
+
+fun float4x4ArrayOf(vararg items: Float4x4) = Float4x4Array(items.flatMap { it.asSequence() }.toFloatArray())

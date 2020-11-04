@@ -26,15 +26,13 @@ class Scene {
 
             init {
                 nodeSet.add(this)
-            }
-
-            init {
                 fn()
             }
 
-        }
+            override fun remove() {
+                nodeSet.remove(this)
+            }
 
-    fun deleteNode(node: Node) =
-        nodeSet.remove(node)
+        }
 
 }

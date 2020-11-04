@@ -15,4 +15,6 @@ abstract class Node(val scene: Scene) {
     fun <T : Component> contains(type: KClass<T>) = componentMap.containsKey(type)
     fun <T : Component> delete(type: KClass<T>) = componentMap.remove(type) != null
 
+    abstract fun remove()
+
 }

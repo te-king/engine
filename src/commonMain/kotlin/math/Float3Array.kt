@@ -1,6 +1,7 @@
 package math
 
-inline class Float3Array(val array: FloatArray) : Iterable<Float3> {
+
+class Float3Array(val array: FloatArray) : Iterable<Float3> {
 
     constructor(size: Int) : this(FloatArray(size * 3))
 

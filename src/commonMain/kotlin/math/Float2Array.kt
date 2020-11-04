@@ -1,7 +1,7 @@
 package math
 
 
-inline class Float2Array(val array: FloatArray) : Iterable<Float2> {
+class Float2Array(val array: FloatArray) : Iterable<Float2> {
 
     constructor(size: Int) : this(FloatArray(size * 2))
 

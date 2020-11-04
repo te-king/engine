@@ -48,49 +48,26 @@ fun slerp(first: Quaternion, second: Quaternion, amount: Float): Quaternion {
     )
 }
 
-
-// sizeof integers
-inline fun sizeOf(type: KClass<Byte>) = Byte.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Short>) = Short.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Int>) = Int.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Long>) = Long.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Int2>) = sizeOf(Int::class) * 2
-inline fun sizeOf(type: KClass<Int3>) = sizeOf(Int::class) * 3
-inline fun sizeOf(type: KClass<Int4>) = sizeOf(Int::class) * 4
-
-
-// sizeof float
-inline fun sizeOf(type: KClass<Float>) = Float.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Double>) = Double.SIZE_BYTES.toLong()
-inline fun sizeOf(type: KClass<Float2>) = sizeOf(Float::class) * 2
-inline fun sizeOf(type: KClass<Float3>) = sizeOf(Float::class) * 3
-inline fun sizeOf(type: KClass<Float4>) = sizeOf(Float::class) * 4
-inline fun sizeOf(type: KClass<Color>) = sizeOf(Float4::class)
-inline fun sizeOf(type: KClass<Quaternion>) = sizeOf(Float4::class)
-inline fun sizeOf(type: KClass<Float4x4>) = sizeOf(Float::class) * 4 * 4
-inline fun sizeOf(type: KClass<ProjectionMatrix>) = sizeOf(Float4x4::class)
-inline fun sizeOf(type: KClass<TransformationMatrix>) = sizeOf(Float4x4::class)
-
-fun sizeOf(vararg types: KClass<*>) =
+fun sizeOf(vararg types: KClass<*>): Long =
     types.map {
         when (it) {
-            Byte::class -> sizeOf(Byte::class)
-            Short::class -> sizeOf(Short::class)
-            Int::class -> sizeOf(Int::class)
-            Long::class -> sizeOf(Long::class)
-            Int2::class -> sizeOf(Int2::class)
-            Int3::class -> sizeOf(Int3::class)
-            Int4::class -> sizeOf(Int4::class)
-            Float::class -> sizeOf(Float::class)
-            Double::class -> sizeOf(Double::class)
-            Float2::class -> sizeOf(Float2::class)
-            Float3::class -> sizeOf(Float3::class)
-            Float4::class -> sizeOf(Float4::class)
-            Color::class -> sizeOf(Color::class)
-            Quaternion::class -> sizeOf(Quaternion::class)
-            Float4x4::class -> sizeOf(Float4x4::class)
-            ProjectionMatrix::class -> sizeOf(ProjectionMatrix::class)
-            TransformationMatrix::class -> sizeOf(TransformationMatrix::class)
+            Byte::class -> Byte.SIZE_BYTES.toLong()
+            Short::class -> Short.SIZE_BYTES.toLong()
+            Int::class -> Int.SIZE_BYTES.toLong()
+            Long::class -> Long.SIZE_BYTES.toLong()
+            Int2::class -> sizeOf(Int::class) * 2
+            Int3::class -> sizeOf(Int::class) * 3
+            Int4::class -> sizeOf(Int::class) * 4
+            Float::class -> Float.SIZE_BYTES.toLong()
+            Double::class -> Double.SIZE_BYTES.toLong()
+            Float2::class -> sizeOf(Float::class) * 2
+            Float3::class -> sizeOf(Float::class) * 3
+            Float4::class -> sizeOf(Float::class) * 4
+            Float4x4::class -> sizeOf(Float::class) * 16
+            Color::class -> sizeOf(Float4::class)
+            Quaternion::class -> sizeOf(Float4::class)
+            ProjectionMatrix::class -> sizeOf(Float4x4::class)
+            TransformationMatrix::class -> sizeOf(Float4x4::class)
             else -> 0
         }
     }.sum()

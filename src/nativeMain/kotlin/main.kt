@@ -1,19 +1,13 @@
-import graphics.Device
-import graphics.draw
-import math.Float4x4
-
-import platform.opengl32.*
 import world.Scene
-import world.controllers.GraphicsContext
+import world.components.Transform
+
 
 fun main() {
 
     val scene = Scene()
 
-    scene.node {
-
-
-
+    val node = scene.addNode {
+        val transform = add(Transform::class)
     }
 
 }

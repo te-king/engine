@@ -7,6 +7,8 @@ import kotlin.properties.ReadOnlyProperty
 
 abstract class Component(val node: Node) {
 
+    val scene get() = node.scene
+
     protected inline fun <reified T : Component> component() =
         ReadOnlyProperty<Component, T> { _, _ -> node.add(T::class) }
 
