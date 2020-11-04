@@ -53,8 +53,6 @@ fun main() {
         val transform = add(Transform::class)
         transform.scale = Float3(0.5f, 0.5f, 0.5f)
 
-        println(transform.worldMatrix)
-
         val drawable = add(Drawable::class)
         drawable.pairs.add(mesh to material)
     }

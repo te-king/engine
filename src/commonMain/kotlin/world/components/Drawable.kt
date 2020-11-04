@@ -1,5 +1,6 @@
 package world.components
 
+import extensions.bindObjectTransformBuffer
 import graphics.DrawCommandBuffer
 import graphics.Material
 import graphics.MeshBufferObject
@@ -16,7 +17,7 @@ class Drawable(node: Node) : Component(node), DeferredPipeline.Renderable {
     override fun draw(commandBuffer: DrawCommandBuffer) {
 
         transform.worldMatrix
-        commandBuffer.bindDataBuffer(2, transform.buffer)
+        commandBuffer.bindObjectTransformBuffer(transform.buffer)
 
         for ((material, pairs) in pairs.groupBy { it.second })
             material?.draw(commandBuffer, pairs.asSequence().map { it.first })

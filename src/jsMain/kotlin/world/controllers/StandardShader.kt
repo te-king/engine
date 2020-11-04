@@ -95,7 +95,7 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
          *********/
         void main()
         {
-            output_fragmentColor = vec4(1, 0, 1, 1);
+            output_fragmentColor = vec4(1, 1, 1, 1);
         }
         
     """.trimIndent().trim()

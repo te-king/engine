@@ -1,9 +1,11 @@
 package graphics
 
 import extensions.native
+import org.khronos.webgl.DOMString
 import org.khronos.webgl.Int8Array
 import org.khronos.webgl.WebGL2RenderingContext
 import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORMS
+import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORM_BLOCKS
 import org.w3c.dom.HTMLCanvasElement
 
 
@@ -42,7 +44,7 @@ actual class Device(val context: WebGL2RenderingContext) {
         val shader = context.createShader(kind.native)?.let { Shader(this, it, kind) } ?: return null
         context.shaderSource(shader.handle, source)
         context.compileShader(shader.handle)
-        println("Shader info log:\n${context.getShaderInfoLog(shader.handle)}")
+        context.getShaderInfoLog(shader.handle)?.takeIf(String::isNotBlank)?.let { println("Shader info log:\n$it") }
         return shader
     }
 
@@ -51,7 +53,9 @@ actual class Device(val context: WebGL2RenderingContext) {
         context.attachShader(pipeline.handle, vertexShader.handle)
         context.attachShader(pipeline.handle, fragmentShader.handle)
         context.linkProgram(pipeline.handle)
-        println("Pipeline info log:\n${context.getProgramInfoLog(pipeline.handle)}")
+        val blockCount = context.getProgramParameter(pipeline.handle, ACTIVE_UNIFORM_BLOCKS) as Int
+        for (blockIndex in 0 until blockCount) context.uniformBlockBinding(pipeline.handle, blockIndex, blockIndex)
+        context.getProgramInfoLog(pipeline.handle)?.takeIf(String::isNotBlank)?.let { println("Shader info log:\n$it") }
         return pipeline
     }
 

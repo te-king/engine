@@ -1,5 +1,7 @@
 package world.components
 
+import extensions.bindCameraDataBuffer
+import extensions.bindCameraTransformBuffer
 import extensions.sizeOf
 import graphics.DataBuffer
 import graphics.DrawCommandBuffer
@@ -46,9 +48,9 @@ class Camera(node: Node) : Component(node) {
 
     fun attach(commandBuffer: DrawCommandBuffer) {
         transform.worldMatrix
-        commandBuffer.bindDataBuffer(0, transform.buffer)
         projectionMatrix
-        commandBuffer.bindDataBuffer(1, buffer)
+        commandBuffer.bindCameraTransformBuffer(transform.buffer)
+        commandBuffer.bindCameraDataBuffer(buffer)
     }
 
 }
