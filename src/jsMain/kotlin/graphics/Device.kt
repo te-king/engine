@@ -6,13 +6,11 @@ import org.khronos.webgl.Int8Array
 import org.khronos.webgl.WebGL2RenderingContext
 import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORMS
 import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORM_BLOCKS
+import org.khronos.webgl.WebGLFramebuffer
 import org.w3c.dom.HTMLCanvasElement
 
 
 actual class Device(val context: WebGL2RenderingContext) {
-
-    constructor(canvas: HTMLCanvasElement) : this(canvas.getContext("webgl2") as WebGL2RenderingContext)
-
 
     actual fun <K : BufferKind, S : BufferStorage> createBuffer(size: Long, kind: K, storage: S): Buffer<K, S>? {
         val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null

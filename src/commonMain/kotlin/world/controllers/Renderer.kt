@@ -1,33 +1,38 @@
 package world.controllers
 
 import extensions.draw
+import graphics.CullMode
+import graphics.DeviceState
 import graphics.DrawCommandBuffer
+import graphics.FaceWinding
 import math.Color
 import world.Scene
 import world.Updatable
 import world.components.Camera
 
 
-class DeferredPipeline(scene: Scene) : Controller(scene), Updatable {
+class Renderer(scene: Scene) : Controller(scene), Updatable {
 
     private val graphicsContext by controller<GraphicsContext>()
     private val renderables by components<Renderable>()
+
+
+    private val state = DeviceState(
+        writeFramebuffer = null,
+        winding = FaceWinding.CounterClockWise,
+        cullFunc = CullMode.Back,
+    )
 
 
     var currentCamera: Camera? = null
 
 
     override fun update(delta: Double) {
-
-        graphicsContext.device.draw {
-
+        graphicsContext.device.draw(state) {
             clearFramebuffer(Color.black)
-
             currentCamera?.attach(this) ?: return@draw
             for (renderable in renderables) renderable.draw(this)
-
         }
-
     }
 
 

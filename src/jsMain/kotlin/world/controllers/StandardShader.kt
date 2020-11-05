@@ -1,5 +1,6 @@
 package world.controllers
 
+import extensions.bindObjectMaterialBuffer
 import extensions.sizeOf
 import graphics.*
 import math.Color
@@ -34,10 +35,10 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
             mat4 worldTransform;
         } objectTransformBlock;
         
-        //layout(std140) uniform _objectMaterialBlock
-        //{
-        //
-        //} objectMaterialBlock;
+        layout(std140) uniform _objectMaterialBlock
+        {
+            vec4 diffuseColor;
+        } objectMaterialBlock;
         
         /*********
          * Inputs and Outputs
@@ -49,7 +50,7 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
          *********/
         void main()
         {
-            gl_Position = inverse(cameraTransformBlock.worldTransform) * objectTransformBlock.worldTransform * input_vertexPosition;
+            gl_Position = cameraDataBlock.projection * inverse(cameraTransformBlock.worldTransform) * objectTransformBlock.worldTransform * input_vertexPosition;
         }
         
     """.trimIndent().trim()
@@ -80,10 +81,10 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
             mat4 worldTransform;
         } objectTransformBlock;
         
-        //layout(std140) uniform _objectMaterialBlock
-        //{
-        //
-        //} objectMaterialBlock;
+        layout(std140) uniform _objectMaterialBlock
+        {
+            vec4 diffuseColor;
+        } objectMaterialBlock;
         
         /*********
          * Inputs and Outputs
@@ -106,20 +107,20 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
 
     actual inner class Material : graphics.Material {
 
-        private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class, Long::class, Long::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
+        private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
 
 
         actual var diffuseColor = Color.black
             set(value) {
-                buffer { writeData(0, value.argb) }
+                buffer { writeData(0, value.rgba) }
                 field = value
             }
 
 
         override fun draw(commandBuffer: DrawCommandBuffer, meshes: Sequence<MeshBufferObject>) {
 
-            commandBuffer.bindDataBuffer(3, buffer)
             commandBuffer.bindPipeline(pipeline)
+            commandBuffer.bindObjectMaterialBuffer(buffer)
 
             for (mesh in meshes) {
 

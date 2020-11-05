@@ -1,5 +1,6 @@
 package world
 
+import extensions.componentsOfType
 import extensions.controllersOfType
 import kotlinx.browser.window
 
@@ -16,8 +17,12 @@ actual class Client {
 
     actual fun start() {
 
-        fun loop(delta: Double) {
-            for (updatable in currentScene.controllersOfType<Updatable>()) updatable.update(delta / 1000.0)
+        var lastTime = 0.0
+
+        fun loop(time: Double) {
+            for (updatable in currentScene.controllersOfType<Updatable>()) updatable.update((time - lastTime) / 1000.0)
+            for (updatable in currentScene.componentsOfType<Updatable>()) updatable.update((time - lastTime) / 1000.0)
+            lastTime = time
             if (!shouldClose) window.requestAnimationFrame(::loop)
         }
 

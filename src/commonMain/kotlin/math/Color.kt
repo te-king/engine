@@ -11,7 +11,7 @@ inline class Color(val vector: Float4) {
     inline val b get() = vector.z
     inline val a get() = vector.w
 
-    inline val rgba get() = Float4(r, g, b, a)
+    inline val rgba get() = vector
     inline val argb get() = Float4(a, r, g, b)
     inline val rgb get() = Float3(r, g, b)
 

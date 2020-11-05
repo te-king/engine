@@ -5,9 +5,9 @@ import graphics.DrawCommandBuffer
 import graphics.Material
 import graphics.MeshBufferObject
 import world.Node
-import world.controllers.DeferredPipeline
+import world.controllers.Renderer
 
-class Drawable(node: Node) : Component(node), DeferredPipeline.Renderable {
+class Drawable(node: Node) : Component(node), Renderer.Renderable {
 
     private val transform by component<Transform>()
 
