@@ -11,6 +11,7 @@ import world.Updatable
 
 class Body(node: Node) : Component(node), Updatable {
 
+    val contactHandlers by components<ContactHandler>()
     val transform by component<Transform>()
 
 
@@ -41,6 +42,11 @@ class Body(node: Node) : Component(node), Updatable {
     override fun update(delta: Double) {
         transform.translation += translationDelta * delta.toFloat()
         transform.rotation = slerp(transform.rotation, transform.rotation * rotationDelta, delta.toFloat())
+    }
+
+
+    interface ContactHandler {
+        fun contact(other: Body, constant: Boolean)
     }
 
 }

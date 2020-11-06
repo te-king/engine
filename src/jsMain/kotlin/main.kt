@@ -31,6 +31,7 @@ fun main() {
             val transform = add(Transform::class)
             val drawable = add(Drawable::class)
             val body = add(Body::class)
+            val ctx = add(ContactEffect::class)
 
             transform.translation = Float3(rand.nextDouble(-1.0, 1.0).toFloat(), (it + 5).toFloat(), rand.nextDouble(-1.0, 1.0).toFloat())
 

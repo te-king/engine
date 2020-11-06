@@ -2,6 +2,7 @@ package physics
 
 import math.Float3
 import world.components.Body
+import world.components.Transform
 import kotlin.math.sqrt
 
 

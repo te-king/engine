@@ -8,10 +8,11 @@ import kotlin.reflect.KClass
 
 
 val componentMap = mapOf<KClass<out Component>, (Node) -> Component>(
+    Body::class to { Body(it) },
     Camera::class to { Camera(it) },
     CameraControls::class to { CameraControls(it) },
+    ContactEffect::class to { ContactEffect(it) },
     Drawable::class to { Drawable(it) },
-    Body::class to { Body(it) },
     Transform::class to { Transform(it) }
 )
 
