@@ -47,7 +47,7 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
 
         when {
             velocityAlongNormal < 0 -> {
-                // Moving towards
+                // Moving towards - reflect
                 val impulseScalar = -(1 + collision.restitution) * velocityAlongNormal / (collision.first.massInverse + collision.second.massInverse)
                 val impulse = collision.normal * impulseScalar
                 collision.first.translationDelta -= impulse * collision.first.massInverse
@@ -56,9 +56,10 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
                 for (handler in collision.first.contactHandlers) handler.contact(collision.second, false)
                 for (handler in collision.second.contactHandlers) handler.contact(collision.first, false)
             }
-            velocityAlongNormal < 0.125 -> {
-                // Moving away very slowly
-                // TODO: zero acceleration in direction
+            velocityAlongNormal < 0.03125 -> {
+                // Moving away very slowly - move into contact
+                collision.first.translationDelta -= collision.normal * dot(collision.first.translationDelta, collision.normal)
+                collision.second.translationDelta -= collision.normal * dot(collision.second.translationDelta, collision.normal)
 
                 for (handler in collision.first.contactHandlers) handler.contact(collision.second, true)
                 for (handler in collision.second.contactHandlers) handler.contact(collision.first, true)

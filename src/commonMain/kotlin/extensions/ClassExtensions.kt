@@ -8,20 +8,20 @@ import kotlin.reflect.KClass
 
 
 val componentMap = mapOf<KClass<out Component>, (Node) -> Component>(
-    Body::class to { Body(it) },
-    Camera::class to { Camera(it) },
-    CameraControls::class to { CameraControls(it) },
-    ContactEffect::class to { ContactEffect(it) },
-    Drawable::class to { Drawable(it) },
-    Transform::class to { Transform(it) }
+    Body::class to ::Body,
+    Camera::class to ::Camera,
+    CameraControls::class to ::CameraControls,
+    ContactEffect::class to ::ContactEffect,
+    Drawable::class to ::Drawable,
+    Transform::class to ::Transform
 )
 
 val controllerMap = mapOf<KClass<out Controller>, (Scene) -> Controller>(
-    GraphicsContext::class to { GraphicsContext(it) },
-    Input::class to { Input(it) },
-    Physics::class to { Physics(it) },
-    Renderer::class to { Renderer(it) },
-    StandardShader::class to { StandardShader(it) }
+    GraphicsContext::class to ::GraphicsContext,
+    Input::class to ::Input,
+    Physics::class to ::Physics,
+    Renderer::class to ::Renderer,
+    StandardShader::class to ::StandardShader
 )
 
 
