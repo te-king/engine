@@ -3,6 +3,7 @@ package world.components
 import extensions.bindCameraDataBuffer
 import extensions.bindCameraTransformBuffer
 import extensions.sizeOf
+import extensions.writeData
 import graphics.DataBuffer
 import graphics.DrawCommandBuffer
 import graphics.DynamicBuffer

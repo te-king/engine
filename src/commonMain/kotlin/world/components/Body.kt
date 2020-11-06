@@ -9,7 +9,7 @@ import world.Node
 import world.Updatable
 
 
-class PhysicsBody(node: Node) : Component(node), Updatable {
+class Body(node: Node) : Component(node), Updatable {
 
     val transform by component<Transform>()
 

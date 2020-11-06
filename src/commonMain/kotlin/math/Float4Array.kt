@@ -34,3 +34,6 @@ class Float4Array(val array: FloatArray) : Iterable<Float4> {
     }
 
 }
+
+
+fun float4ArrayOf(vararg elements: Float4) = Float4Array(elements.flatMap { it.toFloatArray().asSequence() }.toFloatArray())

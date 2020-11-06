@@ -2,6 +2,7 @@ package world.controllers
 
 import extensions.bindObjectMaterialBuffer
 import extensions.sizeOf
+import extensions.writeData
 import graphics.*
 import math.Color
 import world.Scene
@@ -96,7 +97,7 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
          *********/
         void main()
         {
-            output_fragmentColor = vec4(1, 1, 1, 1);
+            output_fragmentColor = objectMaterialBlock.diffuseColor;
         }
         
     """.trimIndent().trim()
@@ -110,7 +111,7 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
         private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
 
 
-        actual var diffuseColor = Color.black
+        actual var diffuseColor = Color.white
             set(value) {
                 buffer { writeData(0, value.rgba) }
                 field = value

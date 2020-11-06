@@ -1,12 +1,9 @@
 package graphics
 
 import extensions.native
-import org.khronos.webgl.DOMString
-import org.khronos.webgl.Int8Array
-import org.khronos.webgl.WebGL2RenderingContext
+import org.khronos.webgl.*
 import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORMS
 import org.khronos.webgl.WebGL2RenderingContext.Companion.ACTIVE_UNIFORM_BLOCKS
-import org.khronos.webgl.WebGLFramebuffer
 import org.w3c.dom.HTMLCanvasElement
 
 
@@ -24,6 +21,42 @@ actual class Device(val context: WebGL2RenderingContext) {
         val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null
         buffer {
             context.bufferData(kind.native, Int8Array(data.toTypedArray()), storage.native)
+        }
+        return buffer
+    }
+
+    actual fun <K : BufferKind, S : BufferStorage> createBuffer(data: ShortArray, kind: K, storage: S): Buffer<K, S>? {
+        val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null
+        buffer {
+            context.bufferData(kind.native, Int16Array(data.toTypedArray()), storage.native)
+        }
+        return buffer
+    }
+
+    actual fun <K : BufferKind, S : BufferStorage> createBuffer(data: IntArray, kind: K, storage: S): Buffer<K, S>? {
+        val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null
+        buffer {
+            context.bufferData(kind.native, Int32Array(data.toTypedArray()), storage.native)
+        }
+        return buffer
+    }
+
+    actual fun <K : BufferKind, S : BufferStorage> createBuffer(data: LongArray, kind: K, storage: S): Buffer<K, S>? {
+        TODO("Not yet implemented")
+    }
+
+    actual fun <K : BufferKind, S : BufferStorage> createBuffer(data: FloatArray, kind: K, storage: S): Buffer<K, S>? {
+        val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null
+        buffer {
+            context.bufferData(kind.native, Float32Array(data.toTypedArray()), storage.native)
+        }
+        return buffer
+    }
+
+    actual fun <K : BufferKind, S : BufferStorage> createBuffer(data: DoubleArray, kind: K, storage: S): Buffer<K, S>? {
+        val buffer = context.createBuffer()?.let { Buffer(this, it, kind, storage) } ?: return null
+        buffer {
+            context.bufferData(kind.native, Float64Array(data.toTypedArray()), storage.native)
         }
         return buffer
     }

@@ -1,6 +1,7 @@
 package world.components
 
 import extensions.sizeOf
+import extensions.writeData
 import graphics.*
 import math.*
 import world.Node
