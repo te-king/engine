@@ -7,6 +7,6 @@ import world.components.Transform
 
 inline fun <reified T> Node.componentsOfType() = components.filterIsInstance<T>()
 
-val Node.parent get() = get(Transform::class)?.parent
+val Node.parent get() = get<Transform>()?.parent
 
-val Node.children get() = get(Transform::class)?.children?.map(Component::node) ?: emptySequence()
+val Node.children get() = get<Transform>()?.children?.map(Component::node) ?: emptySequence()

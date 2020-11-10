@@ -12,16 +12,18 @@ import world.Updatable
 class Body(node: Node) : Component(node), Updatable {
 
     val contactHandlers by components<ContactHandler>()
-    val transform by component<Transform>()
+    val transform by component(::Transform)
 
 
     var collider: Collider = Sphere(1f)
+
+    var groups = setOf("default")
 
     var static = false
 
 
     var mass = 1f
-        get() = if (static) Float.MAX_VALUE else field
+        get() = if (static) Float.POSITIVE_INFINITY else field
         set(value) {
             field = value
             massInverse = 1f / value
@@ -37,6 +39,10 @@ class Body(node: Node) : Component(node), Updatable {
 
     var rotationDelta = Quaternion.identity
         get() = if (static) Quaternion.identity else field
+
+
+    val kineticEnergy
+        get() = 0.5 * mass * translationDelta.lengthSquared
 
 
     override fun update(delta: Double) {

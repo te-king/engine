@@ -17,8 +17,8 @@ import kotlin.properties.Delegates
 
 class Camera(node: Node) : Component(node) {
 
-    private val graphicsContext by controller<GraphicsContext>()
-    private val transform by component<Transform>()
+    private val graphicsContext by controller(::GraphicsContext)
+    private val transform by component(::Transform)
 
 
     private val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class), DataBuffer, DynamicBuffer) ?: error("Failed to create Camera buffer")

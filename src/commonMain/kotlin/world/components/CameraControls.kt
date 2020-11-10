@@ -9,8 +9,8 @@ import world.controllers.Input
 
 class CameraControls(node: Node) : Component(node), Updatable {
 
-    private val input by controller<Input>()
-    private val transform by component<Transform>()
+    private val input by controller(::Input)
+    private val transform by component(::Transform)
 
 
     override fun update(delta: Double) {

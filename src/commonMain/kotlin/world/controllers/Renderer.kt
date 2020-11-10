@@ -13,7 +13,7 @@ import world.components.Camera
 
 class Renderer(scene: Scene) : Controller(scene), Updatable {
 
-    private val graphicsContext by controller<GraphicsContext>()
+    private val graphicsContext by controller(::GraphicsContext)
     private val renderables by components<Renderable>()
 
 

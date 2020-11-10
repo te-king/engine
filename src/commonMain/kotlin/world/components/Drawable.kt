@@ -9,7 +9,7 @@ import world.controllers.Renderer
 
 class Drawable(node: Node) : Component(node), Renderer.Renderable {
 
-    private val transform by component<Transform>()
+    private val transform by component(::Transform)
 
     val pairs = mutableListOf<Pair<MeshBufferObject, Material?>>()
 

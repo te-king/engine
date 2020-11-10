@@ -71,3 +71,8 @@ fun sizeOf(vararg types: KClass<*>): Long =
             else -> 0
         }
     }.sum()
+
+
+fun Collection<Float2>.toFloat2Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float2Array)
+fun Collection<Float3>.toFloat3Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float3Array)
+fun Collection<Float4>.toFloat4Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float4Array)

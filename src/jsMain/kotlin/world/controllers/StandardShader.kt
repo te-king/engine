@@ -10,7 +10,7 @@ import world.Scene
 
 actual class StandardShader actual constructor(scene: Scene) : Controller(scene) {
 
-    private val graphicsContext by controller<GraphicsContext>()
+    private val graphicsContext by controller(::GraphicsContext)
     private val vertexSource = """
         
         #version 300 es
@@ -106,7 +106,12 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
     private val pipeline = graphicsContext.device.createPipeline(vertexShader, fragmentShader) ?: error("failed to link pipeline")
 
 
-    actual inner class Material : graphics.Material {
+    actual inner class Material() : graphics.Material {
+
+        constructor(diffuseColor: Color): this() {
+            this.diffuseColor = diffuseColor
+        }
+
 
         private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
 

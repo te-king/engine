@@ -33,7 +33,6 @@ fun collideSphereSphere(first: Body, second: Body) =
         }
     }
 
-
 fun collideSphereContainer(first: Body, second: Body) =
     sequence {
 

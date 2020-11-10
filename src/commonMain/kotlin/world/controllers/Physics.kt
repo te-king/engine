@@ -4,9 +4,14 @@ import extensions.dot
 import extensions.lerp
 import extensions.pairedPermutations
 import extensions.slerp
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.flow
 import math.Float3
 import math.Quaternion
 import physics.Collision
+import physics.Ray
+import physics.Sphere
 import physics.collide
 import world.Scene
 import world.Updatable
@@ -28,7 +33,7 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
             physicsBody.rotationDelta = slerp(physicsBody.rotationDelta, Quaternion.identity, delta.toFloat())
         }
 
-        for ((first, second) in physicsBodies.pairedPermutations())
+        for ((first, second) in physicsBodies.pairedPermutations().filter { (first, second) -> first.groups.any(second.groups::contains) })
             collide(first, second).forEach(::resolveCollision)
 
     }
@@ -46,7 +51,8 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
         collision.second.transform.translation -= displacement * collision.second.massInverse
 
         when {
-            velocityAlongNormal < 0 -> {
+            velocityAlongNormal < -0.5 -> {
+                println("reflect $velocityAlongNormal")
                 // Moving towards - reflect
                 val impulseScalar = -(1 + collision.restitution) * velocityAlongNormal / (collision.first.massInverse + collision.second.massInverse)
                 val impulse = collision.normal * impulseScalar
@@ -56,7 +62,8 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
                 for (handler in collision.first.contactHandlers) handler.contact(collision.second, false)
                 for (handler in collision.second.contactHandlers) handler.contact(collision.first, false)
             }
-            velocityAlongNormal < 0.03125 -> {
+            velocityAlongNormal < 0 -> {
+                println("zero $velocityAlongNormal")
                 // Moving away very slowly - move into contact
                 collision.first.translationDelta -= collision.normal * dot(collision.first.translationDelta, collision.normal)
                 collision.second.translationDelta -= collision.normal * dot(collision.second.translationDelta, collision.normal)
@@ -67,5 +74,14 @@ class Physics(scene: Scene) : Controller(scene), Updatable {
         }
 
     }
+
+
+    suspend fun raycast(position: Float3, direction: Float3) = coroutineScope {
+
+
+    }
+
+
+    class RaycastHit
 
 }

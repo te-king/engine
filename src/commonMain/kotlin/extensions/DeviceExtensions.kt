@@ -19,3 +19,23 @@ fun <K : BufferKind, S : BufferStorage> Device.createBuffer(data: Float4x4, kind
 fun <F : TextureFormat> Device.createImage2d(width: Long, height: Long, format: F) = createTexture2d(width, height, 1, format)
 
 expect inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit)
+
+
+fun Device.createMeshBufferObject(mesh: Mesh): MeshBufferObject? {
+
+    val vertices = mesh.verticesList.mapIndexedNotNull { index, float4Array ->
+        if (float4Array.size == 0) return@mapIndexedNotNull null
+        val buffer = createBuffer(float4Array, VertexBuffer, ServerBuffer) ?: return null
+        index to VertexBufferObject(buffer, Float4::class, 0, 0)
+    }.toMap()
+
+    val indices = mesh.indiciesList.map {
+        val buffer = createBuffer(it, IndexBuffer, ServerBuffer) ?: return null
+        val count = it.size
+        val kind = PrimitiveType.Triangles
+        IndexBufferObject(buffer, count, kind)
+    }
+
+    return MeshBufferObject(vertices, indices)
+
+}

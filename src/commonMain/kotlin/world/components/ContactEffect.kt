@@ -11,7 +11,7 @@ val rand = Random(1234)
 
 class ContactEffect(node: Node) : Component(node), Body.ContactHandler {
 
-    private val drawable by component<Drawable>()
+    private val drawable by component(::Drawable)
 
 
     override fun contact(other: Body, constant: Boolean) {

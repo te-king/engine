@@ -11,7 +11,7 @@ import kotlin.properties.Delegates
 
 class Transform(node: Node) : Component(node) {
 
-    private val graphicsContext by controller<GraphicsContext>()
+    private val graphicsContext by controller(::GraphicsContext)
 
     val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class, Float4x4::class), DataBuffer, DynamicBuffer) ?: error("Failed to create Transform buffer")
 
