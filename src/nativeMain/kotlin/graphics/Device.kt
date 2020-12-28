@@ -3,6 +3,10 @@ package graphics
 
 actual class Device {
 
+    init {
+
+    }
+
     actual fun <K : BufferKind, S : BufferStorage> createBuffer(size: Long, kind: K, storage: S): Buffer<K, S>? {
         TODO("Not yet implemented")
     }

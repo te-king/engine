@@ -1,7 +1,7 @@
 package graphics
 
 
-expect class Shader<T: ShaderKind> {
+expect class Shader<K: ShaderKind> {
 
     val device: Device
 

@@ -24,12 +24,12 @@ inline class TransformationMatrix(val matrix: Float4x4) {
             val sin = sin(-angle)
             val t = 1.0f - cos
 
-            val axis = axis.normalized
+            val naxis = axis.normalized
 
             return TransformationMatrix(Float4x4(
-                t * axis.x * axis.x + cos, t * axis.x * axis.y - sin * axis.z, t * axis.x * axis.z + sin * axis.y, 0.0f,
-                t * axis.x * axis.y + sin * axis.z, t * axis.y * axis.y + cos, t * axis.y * axis.z - sin * axis.x, 0.0f,
-                t * axis.x * axis.z - sin * axis.y, t * axis.y * axis.z + sin * axis.x, t * axis.z * axis.z + cos, 0.0f,
+                t * naxis.x * naxis.x + cos, t * naxis.x * naxis.y - sin * naxis.z, t * naxis.x * naxis.z + sin * naxis.y, 0.0f,
+                t * naxis.x * naxis.y + sin * naxis.z, t * naxis.y * naxis.y + cos, t * naxis.y * naxis.z - sin * naxis.x, 0.0f,
+                t * naxis.x * naxis.z - sin * naxis.y, t * naxis.y * naxis.z + sin * naxis.x, t * naxis.z * naxis.z + cos, 0.0f,
                 0f, 0f, 0f, 1f
             ))
         }

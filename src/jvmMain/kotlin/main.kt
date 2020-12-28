@@ -1,14 +1,11 @@
-import graphics.GpuObject
+import world.Client
 import world.Scene
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 fun main() {
 
-    val scene = Scene()
-
-    val o = object: GpuObject() {
-
-        var position by int()
-
-    }
+    val client = Client()
+    client.start()
 
 }

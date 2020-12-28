@@ -14,8 +14,8 @@ import org.khronos.webgl.WebGL2RenderingContext.Companion.STENCIL_TEST
 actual inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit) {
     val commandBuffer = createDrawCommandBuffer()?.also(fn) ?: return
 
-    context.bindFramebuffer(READ_FRAMEBUFFER, null)
-    context.bindFramebuffer(DRAW_FRAMEBUFFER, null)
+    context.bindFramebuffer(READ_FRAMEBUFFER, state.readFramebuffer?.handle)
+    context.bindFramebuffer(DRAW_FRAMEBUFFER, state.writeFramebuffer?.handle)
 
     context.frontFace(state.winding.native)
 

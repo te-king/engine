@@ -4,17 +4,13 @@ import extensions.native
 import org.khronos.webgl.*
 
 
-actual class Buffer<K : BufferKind, S : BufferStorage>(
-    actual val device: Device,
-    val handle: WebGLBuffer,
-    val kind: K,
-    val storage: S
-) {
+actual class Buffer<K : BufferKind, S : BufferStorage>(actual val device: Device, val handle: WebGLBuffer, val kind: K, val storage: S) {
 
     actual inner class Context {
         val device get() = this@Buffer.device
         val handle get() = this@Buffer.handle
         val kind = this@Buffer.kind.native
+        val storage = this@Buffer.storage.native
     }
 
     actual inline operator fun invoke(context: Context.() -> Unit) {

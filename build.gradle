@@ -1,9 +1,10 @@
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.4.0'
+    id 'org.jetbrains.kotlin.multiplatform' version '1.4.30-M1'
 }
 
 repositories {
     mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 kotlin {
@@ -11,9 +12,9 @@ kotlin {
         browser()
         binaries.executable()
     }
-//    jvm {
-//
-//    }
+    jvm {
+
+    }
 //    mingwX64("native") {
 //        binaries.executable()
 //    }
@@ -21,15 +22,20 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
             }
         }
         jsMain {}
-//        jvmMain {
-//            dependencies {
-//                implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.0'
-//            }
-//        }
+        jvmMain {
+            dependencies {
+                implementation "org.lwjgl:lwjgl:3.2.3"
+                implementation "org.lwjgl:lwjgl-glfw:3.2.3"
+                implementation "org.lwjgl:lwjgl-opengl:3.2.3"
+                runtimeOnly "org.lwjgl:lwjgl:3.2.3:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-glfw:3.2.3:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-opengl:3.2.3:natives-windows"
+            }
+        }
         all {
             languageSettings.enableLanguageFeature("InlineClasses")
         }
