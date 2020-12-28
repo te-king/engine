@@ -8,6 +8,9 @@ import world.Scene
 
 actual class StandardShader actual constructor(scene: Scene) : Controller(scene) {
 
+    private val graphicsContext by controller(::GraphicsContext)
+
+
     actual inner class Material : graphics.Material {
 
         actual var diffuseColor: Color

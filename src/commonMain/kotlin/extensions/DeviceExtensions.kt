@@ -18,8 +18,6 @@ fun <K : BufferKind, S : BufferStorage> Device.createBuffer(data: Float4x4, kind
 
 fun <F : TextureFormat> Device.createImage2d(width: Long, height: Long, format: F) = createTexture2d(width, height, 1, format)
 
-expect inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit)
-
 
 fun Device.createMeshBufferObject(mesh: Mesh): MeshBufferObject? {
 

@@ -29,3 +29,5 @@ expect class Device {
     fun createDrawCommandBuffer(): DrawCommandBuffer?
 
 }
+
+expect inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit)
