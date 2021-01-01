@@ -1,5 +1,6 @@
 import extensions.createMeshBufferObject
 import graphics.CubeMesh
+import graphics.TriangleMesh
 import math.Color
 import math.Float3
 import physics.Container
@@ -52,7 +53,7 @@ fun main() {
         getOrAdd(::Body)
 
         transform.translation = Float3(0f, 20f, 0f)
-        val mesh = graphicsContext.device.createMeshBufferObject(CubeMesh) ?: error("Failed to create mesh buffer object")
+        val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")
         val material = standardShader.Material().also { it.diffuseColor = Color.green }
         drawable.pairs.add(mesh to material)
     }
