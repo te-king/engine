@@ -90,6 +90,21 @@ actual class Device(val context: WebGL2RenderingContext) {
         return pipeline
     }
 
+    actual fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>, vararg mappings: Pair<String, Int>): Pipeline? {
+        val pipeline = context.createProgram()?.let { Pipeline(this, it, vertexShader, fragmentShader) } ?: return null
+        context.attachShader(pipeline.handle, vertexShader.handle)
+        context.attachShader(pipeline.handle, fragmentShader.handle)
+        context.linkProgram(pipeline.handle)
+
+        for ((name, binding) in mappings) {
+            val index = context.getUniformBlockIndex(pipeline.handle, name)
+            context.uniformBlockBinding(pipeline.handle, index, binding)
+        }
+
+        context.getProgramInfoLog(pipeline.handle)?.takeIf(String::isNotBlank)?.let { println("Shader info log:\n$it") }
+        return pipeline
+    }
+
 
     actual fun createDrawCommandBuffer(): DrawCommandBuffer? {
         return DrawCommandBuffer(this, mutableListOf())
@@ -101,31 +116,31 @@ actual class Device(val context: WebGL2RenderingContext) {
 actual inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit) {
     val commandBuffer = createDrawCommandBuffer()?.also(fn) ?: return
 
-    context.bindFramebuffer(WebGL2RenderingContext.READ_FRAMEBUFFER, state.readFramebuffer?.handle)
-    context.bindFramebuffer(WebGL2RenderingContext.DRAW_FRAMEBUFFER, state.writeFramebuffer?.handle)
-
-    context.frontFace(state.winding.native)
-
-    if (state.cullFunc != null) {
-        context.enable(WebGL2RenderingContext.CULL_FACE)
-        context.cullFace(state.cullFunc.native)
-    } else {
-        context.disable(WebGL2RenderingContext.CULL_FACE)
-    }
-
-    if (state.blendFunction != null) {
-        context.enable(WebGL2RenderingContext.BLEND)
-        // TODO
-    } else {
-        context.disable(WebGL2RenderingContext.BLEND)
-    }
-
-    if (state.depthFunction != null) {
-        context.enable(WebGL2RenderingContext.DEPTH_TEST)
-        context.depthFunc(state.depthFunction.native)
-    } else {
-        context.disable(WebGL2RenderingContext.DEPTH_TEST)
-    }
+//    context.bindFramebuffer(WebGL2RenderingContext.READ_FRAMEBUFFER, state.readFramebuffer?.handle)
+//    context.bindFramebuffer(WebGL2RenderingContext.DRAW_FRAMEBUFFER, state.writeFramebuffer?.handle)
+//
+//    context.frontFace(state.winding.native)
+//
+//    if (state.cullFunc != null) {
+//        context.enable(WebGL2RenderingContext.CULL_FACE)
+//        context.cullFace(state.cullFunc.native)
+//    } else {
+//        context.disable(WebGL2RenderingContext.CULL_FACE)
+//    }
+//
+//    if (state.blendFunction != null) {
+//        context.enable(WebGL2RenderingContext.BLEND)
+//        // TODO
+//    } else {
+//        context.disable(WebGL2RenderingContext.BLEND)
+//    }
+//
+//    if (state.depthFunction != null) {
+//        context.enable(WebGL2RenderingContext.DEPTH_TEST)
+//        context.depthFunc(state.depthFunction.native)
+//    } else {
+//        context.disable(WebGL2RenderingContext.DEPTH_TEST)
+//    }
 
     commandBuffer.submit()
 }

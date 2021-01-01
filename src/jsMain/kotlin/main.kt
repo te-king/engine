@@ -27,13 +27,15 @@ fun main() {
      * Nodes
      */
     val boxNode = currentScene.node()
-    val cameraNode = currentScene.node()
 
     boxNode.apply {
         val body = getOrAdd(::Body)
         body.static = true
         body.collider = Container
     }
+
+
+    val cameraNode = currentScene.node()
 
     cameraNode.apply {
         val transform = getOrAdd(::Transform)
@@ -44,22 +46,23 @@ fun main() {
     }
 
 
-    repeat(4) {
-        val triangleNode = currentScene.node()
-        triangleNode.apply {
-            val transform = getOrAdd(::Transform)
-            val drawable = getOrAdd(::Drawable)
-            getOrAdd(::Body)
-
-            transform.translation = Float3(0f, 5f + it, 0f)
-            val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")
-            val material = standardShader.Material(Color.green)
-            drawable.pairs.add(mesh to material)
-        }
-    }
+//    repeat(4) {
+//        val triangleNode = currentScene.node()
+//        triangleNode.apply {
+//            val transform = getOrAdd(::Transform)
+//            val drawable = getOrAdd(::Drawable)
+//            getOrAdd(::Body)
+//
+//            transform.translation = Float3(0f, 5f + it, 0f)
+//            val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")
+//            val material = standardShader.Material().also { it.diffuseColor = Color.green }
+//            drawable.pairs.add(mesh to material)
+//        }
+//    }
 
 
     val triangleNode = currentScene.node()
+
     triangleNode.apply {
         val transform = getOrAdd(::Transform)
         val drawable = getOrAdd(::Drawable)
@@ -67,7 +70,7 @@ fun main() {
 
         transform.translation = Float3(0f, 20f, 0f)
         val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")
-        val material = standardShader.Material(Color.green)
+        val material = standardShader.Material().also { it.diffuseColor = Color.green }
         drawable.pairs.add(mesh to material)
     }
 

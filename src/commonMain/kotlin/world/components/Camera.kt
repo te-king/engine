@@ -21,7 +21,7 @@ class Camera(node: Node) : Component(node) {
     private val transform by component(::Transform)
 
 
-    private val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class), DataBuffer, DynamicBuffer) ?: error("Failed to create Camera buffer")
+    private val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class, Float4x4::class), DataBuffer, DynamicBuffer) ?: error("Failed to create Camera buffer")
 
 
     var fieldOfView by Delegates.observable(0.7854f) { _, _, _ -> projectionInvalid = true }

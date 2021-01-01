@@ -9,9 +9,9 @@ actual class Pipeline(actual val device: Device, val handle: WebGLProgram, actua
 
     actual inline operator fun invoke(context: Context.() -> Unit) {
         Context().apply {
-            device.context.linkProgram(handle)
+            device.context.useProgram(handle)
             context()
-            device.context.linkProgram(null)
+            device.context.useProgram(null)
         }
     }
 

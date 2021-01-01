@@ -25,6 +25,8 @@ expect class Device {
 
     fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>): Pipeline?
 
+    fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>, vararg mappings: Pair<String, Int>): Pipeline?
+
 
     fun createDrawCommandBuffer(): DrawCommandBuffer?
 

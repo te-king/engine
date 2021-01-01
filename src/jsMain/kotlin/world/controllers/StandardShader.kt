@@ -5,6 +5,7 @@ import extensions.sizeOf
 import extensions.writeData
 import graphics.*
 import math.Color
+import math.Float4x4
 import world.Scene
 
 
@@ -103,15 +104,16 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
     """.trimIndent().trim()
     private val fragmentShader = graphicsContext.device.createShader(fragmentSource, FragmentShader) ?: error("failed to compile fragment stage for StandardShader")
 
-    private val pipeline = graphicsContext.device.createPipeline(vertexShader, fragmentShader) ?: error("failed to link pipeline")
+    private val pipeline = graphicsContext.device.createPipeline(
+        vertexShader, fragmentShader,
+        "_cameraTransformBlock" to 0,
+        "_cameraDataBlock" to 1,
+        "_objectTransformBlock" to 2,
+        "_objectMaterialBlock" to 3
+    ) ?: error("failed to link pipeline")
 
 
     actual inner class Material() : graphics.Material {
-
-        constructor(diffuseColor: Color): this() {
-            this.diffuseColor = diffuseColor
-        }
-
 
         private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
 
@@ -130,8 +132,8 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
 
             for (mesh in meshes) {
 
-                for ((index, buffer) in mesh.vertexBuffers)
-                    commandBuffer.bindVertexBuffer(index, buffer.buffer, buffer.type, buffer.offset, buffer.stride)
+                for ((index, vertexBuffer) in mesh.vertexBuffers)
+                    commandBuffer.bindVertexBuffer(index, vertexBuffer.buffer, vertexBuffer.type, vertexBuffer.offset, vertexBuffer.stride)
 
                 for (indexBuffer in mesh.indexBuffers) {
                     commandBuffer.bindIndexBuffer(indexBuffer.buffer)
