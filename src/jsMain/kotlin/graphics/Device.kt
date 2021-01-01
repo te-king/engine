@@ -79,17 +79,6 @@ actual class Device(val context: WebGL2RenderingContext) {
         return shader
     }
 
-    actual fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>): Pipeline? {
-        val pipeline = context.createProgram()?.let { Pipeline(this, it, vertexShader, fragmentShader) } ?: return null
-        context.attachShader(pipeline.handle, vertexShader.handle)
-        context.attachShader(pipeline.handle, fragmentShader.handle)
-        context.linkProgram(pipeline.handle)
-        val blockCount = context.getProgramParameter(pipeline.handle, ACTIVE_UNIFORM_BLOCKS) as Int
-        for (blockIndex in 0 until blockCount) context.uniformBlockBinding(pipeline.handle, blockIndex, blockIndex)
-        context.getProgramInfoLog(pipeline.handle)?.takeIf(String::isNotBlank)?.let { println("Shader info log:\n$it") }
-        return pipeline
-    }
-
     actual fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>, vararg mappings: Pair<String, Int>): Pipeline? {
         val pipeline = context.createProgram()?.let { Pipeline(this, it, vertexShader, fragmentShader) } ?: return null
         context.attachShader(pipeline.handle, vertexShader.handle)
@@ -116,9 +105,9 @@ actual class Device(val context: WebGL2RenderingContext) {
 actual inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit) {
     val commandBuffer = createDrawCommandBuffer()?.also(fn) ?: return
 
-//    context.bindFramebuffer(WebGL2RenderingContext.READ_FRAMEBUFFER, state.readFramebuffer?.handle)
-//    context.bindFramebuffer(WebGL2RenderingContext.DRAW_FRAMEBUFFER, state.writeFramebuffer?.handle)
-//
+    context.bindFramebuffer(WebGL2RenderingContext.READ_FRAMEBUFFER, state.readFramebuffer?.handle)
+    context.bindFramebuffer(WebGL2RenderingContext.DRAW_FRAMEBUFFER, state.writeFramebuffer?.handle)
+
     context.frontFace(state.winding.native)
 
     if (state.cullFunc != null) {

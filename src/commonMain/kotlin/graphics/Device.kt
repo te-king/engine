@@ -23,8 +23,6 @@ expect class Device {
 
     fun <K : ShaderKind> createShader(source: String, kind: K): Shader<K>?
 
-    fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>): Pipeline?
-
     fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>, vararg mappings: Pair<String, Int>): Pipeline?
 
 

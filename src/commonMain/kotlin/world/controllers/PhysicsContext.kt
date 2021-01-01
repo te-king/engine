@@ -18,7 +18,7 @@ import world.Updatable
 import world.components.Body
 
 
-class Physics(scene: Scene) : Controller(scene), Updatable {
+class PhysicsContext(scene: Scene) : Controller(scene), Updatable {
 
     private val physicsBodies by components<Body>()
 
