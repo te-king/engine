@@ -1,5 +1,4 @@
 import extensions.createMeshBufferObject
-import graphics.CubeMesh
 import graphics.TriangleMesh
 import math.Color
 import math.Float3
@@ -28,7 +27,7 @@ fun main() {
     val boxNode = currentScene.node()
 
     boxNode.apply {
-        val body = getOrAdd(::Body)
+        val body = getOrAdd(::PhysicsBody)
         body.static = true
         body.collider = Container
     }
@@ -50,7 +49,7 @@ fun main() {
     triangleNode.apply {
         val transform = getOrAdd(::Transform)
         val drawable = getOrAdd(::Drawable)
-        getOrAdd(::Body)
+        getOrAdd(::PhysicsBody)
 
         transform.translation = Float3(0f, 20f, 0f)
         val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")

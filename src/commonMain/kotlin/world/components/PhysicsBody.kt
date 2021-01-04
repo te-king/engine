@@ -1,6 +1,7 @@
 package world.components
 
 import extensions.slerp
+import math.Float2
 import math.Float3
 import math.Quaternion
 import physics.Collider
@@ -9,7 +10,7 @@ import world.Node
 import world.Updatable
 
 
-class Body(node: Node) : Component(node), Updatable {
+class PhysicsBody(node: Node) : Component(node), Updatable {
 
     val contactHandlers by components<ContactHandler>()
     val transform by component(::Transform)
@@ -52,7 +53,7 @@ class Body(node: Node) : Component(node), Updatable {
 
 
     interface ContactHandler {
-        fun contact(other: Body, constant: Boolean)
+        fun contact(other: PhysicsBody, constant: Boolean)
     }
 
 }

@@ -9,12 +9,12 @@ import kotlin.random.Random
 val rand = Random(1234)
 
 
-class ContactEffect(node: Node) : Component(node), Body.ContactHandler {
+class ContactEffect(node: Node) : Component(node), PhysicsBody.ContactHandler {
 
     private val drawable by component(::Drawable)
 
 
-    override fun contact(other: Body, constant: Boolean) {
+    override fun contact(other: PhysicsBody, constant: Boolean) {
 
         if (!constant) return
 

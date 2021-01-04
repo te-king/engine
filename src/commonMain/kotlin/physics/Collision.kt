@@ -1,8 +1,7 @@
 package physics
 
 import math.Float3
-import world.components.Body
-import world.components.Transform
+import world.components.PhysicsBody
 import kotlin.math.sqrt
 
 
@@ -10,14 +9,14 @@ import kotlin.math.sqrt
  * intersection:
  * the distance the first element has fowled with the second item
  */
-data class Collision(val first: Body, val second: Body, val normal: Float3, val seperation: Float) {
+data class Collision(val first: PhysicsBody, val second: PhysicsBody, val normal: Float3, val seperation: Float) {
 
     val restitution = 0.5f
 
 }
 
 
-fun collideSphereSphere(first: Body, second: Body) =
+fun collideSphereSphere(first: PhysicsBody, second: PhysicsBody) =
     sequence {
         val firstCollider = first.collider as Sphere
         val secondCollider = second.collider as Sphere
@@ -33,7 +32,7 @@ fun collideSphereSphere(first: Body, second: Body) =
         }
     }
 
-fun collideSphereContainer(first: Body, second: Body) =
+fun collideSphereContainer(first: PhysicsBody, second: PhysicsBody) =
     sequence {
 
         first.collider as Sphere
@@ -59,7 +58,7 @@ fun collideSphereContainer(first: Body, second: Body) =
     }
 
 
-fun collide(first: Body, second: Body) =
+fun collide(first: PhysicsBody, second: PhysicsBody) =
     when {
         first.collider is Sphere && second.collider is Sphere -> collideSphereSphere(first, second)
         first.collider is Sphere && second.collider is Container -> collideSphereContainer(first, second)

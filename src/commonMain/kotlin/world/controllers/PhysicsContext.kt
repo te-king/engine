@@ -4,23 +4,18 @@ import extensions.dot
 import extensions.lerp
 import extensions.pairedPermutations
 import extensions.slerp
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.flow
 import math.Float3
 import math.Quaternion
 import physics.Collision
-import physics.Ray
-import physics.Sphere
 import physics.collide
 import world.Scene
 import world.Updatable
-import world.components.Body
+import world.components.PhysicsBody
 
 
 class PhysicsContext(scene: Scene) : Controller(scene), Updatable {
 
-    private val physicsBodies by components<Body>()
+    private val physicsBodies by components<PhysicsBody>()
 
     var gravity = Float3(0f, -9.81f, 0f)
 
@@ -74,12 +69,24 @@ class PhysicsContext(scene: Scene) : Controller(scene), Updatable {
     }
 
 
-    suspend fun raycast(position: Float3, direction: Float3) = coroutineScope {
+    fun raycast(position: Float3, direction: Float3) =
+        sequence<RaycastHit> {
 
-
-    }
+        }
 
 
     class RaycastHit
+
+
+//    fun test(): Boolean {
+//        val Q = SimpleVector(sphereOrigin)
+//        Q.sub(rayOrigin)
+//
+//        val c: Float = Q.length()
+//        val v: Float = Q.calcDot(rayDirection)
+//        val d: Float = sphereRadius * sphereRadius - (c * c - v * v)
+//
+//        return d >= 0.0
+//    }
 
 }
