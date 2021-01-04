@@ -12,9 +12,10 @@ fun main() {
     /***
      * Controllers
      */
-    val graphicsContext = currentScene.getOrAdd(::GraphicsContext)
+    val graphics = currentScene.getOrAdd(::GraphicsContext)
     val input = currentScene.getOrAdd(::Input)
-    val physics = currentScene.getOrAdd(::Physics)
+    val physics = currentScene.getOrAdd(::PhysicsContext)
+    val renderer = currentScene.getOrAdd(::Renderer)
 
 
     client.start()

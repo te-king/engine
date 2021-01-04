@@ -68,51 +68,58 @@ actual class Device(val context: CoroutineDispatcher) {
             return@runBlocking Shader(this@Device, id, kind)
         }
 
-    actual fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>): Pipeline? =
+    actual fun createPipeline(vertexShader: Shader<VertexShader>, fragmentShader: Shader<FragmentShader>, vararg mappings: Pair<String, Int>): Pipeline? =
         runBlocking(context) {
             val id = glCreateProgramPipelines().takeUnless { it == 0 } ?: return@runBlocking null
             glUseProgramStages(id, VertexShader.stage, vertexShader.id)
             glUseProgramStages(id, FragmentShader.stage, fragmentShader.id)
+            if (mappings.isNotEmpty()) println("Mappings are ignored in opengl 4.6")
             return@runBlocking Pipeline(this@Device, id, vertexShader, fragmentShader)
         }
 
-    actual fun createDrawCommandBuffer(): DrawCommandBuffer? =
+    actual fun createDrawCommandBuffer(deviceState: DeviceState): DrawCommandBuffer? =
         runBlocking(context) {
-            return@runBlocking DrawCommandBuffer(this@Device)
+
+            val commands = mutableListOf<() -> Unit>()
+
+            commands.add {
+                glBindFramebuffer(GL_READ_FRAMEBUFFER, deviceState.readFramebuffer?.id ?: 0)
+                glBindFramebuffer(GL_DRAW_FRAMEBUFFER, deviceState.writeFramebuffer?.id ?: 0)
+            }
+
+//            if (deviceState.cullFunc != null)
+//                commands.add {
+//                    context.enable(WebGL2RenderingContext.CULL_FACE)
+//                    context.cullFace(deviceState.cullFunc.native)
+//            glFrontFace(state.winding.native)
+//                }
+//            else
+//                commands.add {
+//                    context.disable(WebGL2RenderingContext.CULL_FACE)
+//                }
+//
+//            if (deviceState.blendFunction != null)
+//                commands.add {
+//                    context.enable(WebGL2RenderingContext.BLEND)
+//                    // TODO
+//                }
+//            else
+//                commands.add {
+//                    context.disable(WebGL2RenderingContext.BLEND)
+//                }
+//
+//            if (deviceState.depthFunction != null)
+//                commands.add {
+//                    context.enable(WebGL2RenderingContext.DEPTH_TEST)
+//                    context.depthFunc(deviceState.depthFunction.native)
+//                }
+//            else
+//                commands.add {
+//                    context.disable(WebGL2RenderingContext.DEPTH_TEST)
+//                }
+
+            DrawCommandBuffer(this@Device, commands)
+
         }
 
-}
-
-
-actual inline fun Device.draw(state: DeviceState, crossinline fn: DrawCommandBuffer.() -> Unit) {
-    val commandBuffer = createDrawCommandBuffer()?.also(fn) ?: return
-
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, state.readFramebuffer?.id ?: 0)
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, state.writeFramebuffer?.id ?: 0)
-
-    glFrontFace(state.winding.native)
-
-//
-//    if (state.cullFunc != null) {
-//        context.enable(CULL_FACE)
-//        context.cullFace(state.cullFunc.native)
-//    } else {
-//        context.disable(CULL_FACE)
-//    }
-//
-//    if (state.blendFunction != null) {
-//        context.enable(BLEND)
-//        // TODO
-//    } else {
-//        context.disable(BLEND)
-//    }
-//
-//    if (state.depthFunction != null) {
-//        context.enable(DEPTH_TEST)
-//        context.depthFunc(state.depthFunction.native)
-//    } else {
-//        context.disable(DEPTH_TEST)
-//    }
-
-    commandBuffer.submit()
 }

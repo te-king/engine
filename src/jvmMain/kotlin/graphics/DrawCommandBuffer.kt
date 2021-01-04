@@ -3,7 +3,7 @@ package graphics
 import math.Color
 import kotlin.reflect.KClass
 
-actual class DrawCommandBuffer(actual val device: Device) {
+actual class DrawCommandBuffer(actual val device: Device, val commands: MutableList<() -> Unit>) {
 
     actual fun bindDataBuffer(index: Int, buffer: Buffer<DataBuffer, *>?) {
 
