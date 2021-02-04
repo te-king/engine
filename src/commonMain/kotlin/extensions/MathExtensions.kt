@@ -20,7 +20,8 @@ fun dot(v0: Float2, v1: Float2) = v0.x * v1.x + v0.y * v1.y
 fun dot(v0: Float3, v1: Float3) = v0.x * v1.x + v0.y * v1.y + v0.z * v1.z
 fun dot(v0: Float4, v1: Float4) = v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w * v1.w
 
-fun cross(v0: Float3, v1: Float3) = Float3(v0.y * v1.z - v0.z * v1.y, v0.z * v1.x - v0.x * v1.z, v0.x * v1.y - v0.y * v1.x)
+fun cross(v0: Float3, v1: Float3) =
+    Float3(v0.y * v1.z - v0.z * v1.y, v0.z * v1.x - v0.x * v1.z, v0.x * v1.y - v0.y * v1.x)
 
 
 fun slerp(first: Quaternion, second: Quaternion, amount: Float): Quaternion {
@@ -71,8 +72,3 @@ fun sizeOf(vararg types: KClass<*>): Long =
             else -> 0
         }
     }.sum()
-
-
-fun Collection<Float2>.toFloat2Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float2Array)
-fun Collection<Float3>.toFloat3Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float3Array)
-fun Collection<Float4>.toFloat4Array() = flatMap { it.toFloatArray().toList() }.toFloatArray().let(::Float4Array)

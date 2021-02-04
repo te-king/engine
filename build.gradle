@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.4.30-M1'
+    id 'org.jetbrains.kotlin.multiplatform' version '1.4.30'
 }
 
 repositories {
@@ -40,7 +40,12 @@ kotlin {
             }
         }
         all {
-            languageSettings.enableLanguageFeature("InlineClasses")
+            languageSettings {
+                languageVersion = '1.5'
+                apiVersion = '1.5'
+                progressiveMode = true
+            }
+//            languageSettings.enableLanguageFeature("InlineClasses")
         }
     }
 }

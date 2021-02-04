@@ -1,6 +1,6 @@
 package graphics
 
-import extensions.toFloat4Array
+import math.toFloat4Array
 
 
 class Submesh(val mesh: Mesh, val index: Int) {

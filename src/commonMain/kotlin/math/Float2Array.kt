@@ -1,9 +1,15 @@
 package math
 
+import kotlin.jvm.JvmInline
 
-class Float2Array(val array: FloatArray) : Iterable<Float2> {
+
+@JvmInline
+value class Float2Array private constructor(val array: FloatArray) : Iterable<Float2> {
 
     constructor(size: Int) : this(FloatArray(size * 2))
+
+
+    val size get() = array.size / 2
 
 
     operator fun get(index: Int): Float2 {
@@ -19,9 +25,6 @@ class Float2Array(val array: FloatArray) : Iterable<Float2> {
     }
 
 
-    val size get() = array.size / 2
-
-
     override operator fun iterator() = iterator {
 
         for (i in 0 until size)
@@ -29,4 +32,17 @@ class Float2Array(val array: FloatArray) : Iterable<Float2> {
 
     }
 
+}
+
+
+fun float2ArrayOf(vararg elements: Float2): Float2Array {
+    val result = Float2Array(elements.size)
+    elements.forEachIndexed { i, f -> result[i] = f }
+    return result
+}
+
+fun Collection<Float2>.toFloat2Array(): Float2Array {
+    val result = Float2Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
 }

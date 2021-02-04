@@ -1,9 +1,15 @@
 package math
 
+import kotlin.jvm.JvmInline
 
-class Float3Array(val array: FloatArray) : Iterable<Float3> {
+
+@JvmInline
+value class Float3Array private constructor(val array: FloatArray) : Iterable<Float3> {
 
     constructor(size: Int) : this(FloatArray(size * 3))
+
+
+    val size get() = array.size / 3
 
 
     operator fun get(index: Int): Float3 {
@@ -21,9 +27,6 @@ class Float3Array(val array: FloatArray) : Iterable<Float3> {
     }
 
 
-    val size get() = array.size / 3
-
-
     override operator fun iterator() = iterator {
 
         for (i in 0 until size)
@@ -31,4 +34,17 @@ class Float3Array(val array: FloatArray) : Iterable<Float3> {
 
     }
 
+}
+
+
+fun float3ArrayOf(vararg elements: Float3): Float3Array {
+    val result = Float3Array(elements.size)
+    elements.forEachIndexed { i, f -> result[i] = f }
+    return result
+}
+
+fun Collection<Float3>.toFloat3Array(): Float3Array {
+    val result = Float3Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
 }

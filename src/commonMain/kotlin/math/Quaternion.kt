@@ -1,13 +1,15 @@
 package math
 
 import extensions.cross
+import kotlin.jvm.JvmInline
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 
-inline class Quaternion(val vector: Float4) {
+@JvmInline
+value class Quaternion private constructor(val vector: Float4) {
 
     companion object {
         val identity = Quaternion(0f, 0f, 0f, 1f)

@@ -1,7 +1,10 @@
 package math
 
+import kotlin.jvm.JvmInline
 
-inline class Color(val vector: Float4) {
+
+@JvmInline
+value class Color(val vector: Float4) {
 
     constructor(r: Float, g: Float, b: Float, a: Float) : this(Float4(r, g, b, a))
 

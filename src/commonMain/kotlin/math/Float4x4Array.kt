@@ -1,9 +1,15 @@
 package math
 
+import kotlin.jvm.JvmInline
 
-class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
+
+@JvmInline
+value class Float4x4Array private constructor(val array: FloatArray) : Iterable<Float4x4> {
 
     constructor(size: Int) : this(FloatArray(size * (4 * 4)))
+
+
+    val size get() = array.size / (4 * 4)
 
 
     operator fun get(index: Int): Float4x4 {
@@ -47,9 +53,6 @@ class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
     }
 
 
-    val size get() = array.size / (4 * 4)
-
-
     override operator fun iterator() = iterator {
 
         for (i in 0 until size)
@@ -60,4 +63,14 @@ class Float4x4Array(val array: FloatArray) : Iterable<Float4x4> {
 }
 
 
-fun float4x4ArrayOf(vararg items: Float4x4) = Float4x4Array(items.flatMap { it.asSequence() }.toFloatArray())
+fun float4x4ArrayOf(vararg elements: Float4x4): Float4x4Array {
+    val result = Float4x4Array(elements.size)
+    elements.forEachIndexed { i, f -> result[i] = f }
+    return result
+}
+
+fun Collection<Float4x4>.toFloat4x4Array(): Float4x4Array {
+    val result = Float4x4Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
+}
