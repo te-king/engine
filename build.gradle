@@ -5,6 +5,7 @@ plugins {
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://dl.bintray.com/dominaezzz/kotlin-native" }
 }
 
 kotlin {
@@ -12,9 +13,7 @@ kotlin {
         browser()
         binaries.executable()
     }
-    jvm {
-
-    }
+//    jvm {}
 //    mingwX64("native") {
 //        binaries.executable()
 //    }
@@ -29,23 +28,18 @@ kotlin {
             }
         }
         jsMain {}
-        jvmMain {
+        nativeMain {
             dependencies {
-                implementation "org.lwjgl:lwjgl:3.2.3"
-                implementation "org.lwjgl:lwjgl-glfw:3.2.3"
-                implementation "org.lwjgl:lwjgl-opengl:3.2.3"
-                runtimeOnly "org.lwjgl:lwjgl:3.2.3:natives-windows"
-                runtimeOnly "org.lwjgl:lwjgl-glfw:3.2.3:natives-windows"
-                runtimeOnly "org.lwjgl:lwjgl-opengl:3.2.3:natives-windows"
+                implementation 'com.kgl:kgl-core:+'
+                implementation 'com.kgl:kgl-glfw:+'
+                implementation 'com.kgl:kgl-opengl:+'
             }
         }
         all {
             languageSettings {
                 languageVersion = '1.5'
                 apiVersion = '1.5'
-                progressiveMode = true
             }
-//            languageSettings.enableLanguageFeature("InlineClasses")
         }
     }
 }

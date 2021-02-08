@@ -6,17 +6,19 @@ import kotlin.reflect.KClass
 
 class Scene {
 
-    val controllerMap = mutableMapOf<KClass<out Controller>, Controller>()
+    private val controllerMap = mutableMapOf<KClass<out Controller>, Controller>()
     val controllers get() = controllerMap.values.asSequence()
 
-    inline fun <reified T : Controller> getOrAdd(noinline ctor: (Scene) -> T) = controllerMap.getOrPut(T::class) { ctor(this) } as T
-    inline fun <reified T : Controller> get() = controllerMap[T::class] as T?
-    inline fun <reified T : Controller> contains() = controllerMap.containsKey(T::class)
-    inline fun <reified T : Controller> delete() = controllerMap.remove(T::class) != null
+    fun <T : Controller> getOrAdd(type: KClass<T>, ctor: (Scene) -> T) = controllerMap.getOrPut(type) { ctor(this) } as T
+    fun <T : Controller> get(type: KClass<T>) = controllerMap[type] as T?
+    fun <T : Controller> contains(type: KClass<T>) = controllerMap.containsKey(type)
+    fun <T : Controller> delete(type: KClass<T>) = controllerMap.remove(type) != null
 
 
-    val nodeSet = mutableSetOf<Node>()
+    private val nodeSet = mutableSetOf<Node>()
     val nodes get() = nodeSet.asSequence()
-    fun node() = Node(this).also(nodeSet::add)
+
+    @Suppress("FunctionName")
+    fun Node(builder: Node.() -> Unit) = Node(this).also(nodeSet::add).let(builder)
 
 }

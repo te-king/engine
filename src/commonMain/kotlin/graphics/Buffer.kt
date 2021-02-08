@@ -1,7 +1,5 @@
 package graphics
 
-import math.*
-
 
 expect class Buffer<K : BufferKind, M : BufferStorage> {
 

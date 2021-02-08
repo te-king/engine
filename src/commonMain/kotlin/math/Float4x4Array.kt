@@ -74,3 +74,9 @@ fun Collection<Float4x4>.toFloat4x4Array(): Float4x4Array {
     this.forEachIndexed { i, f -> result[i] = f }
     return result
 }
+
+fun Array<out Float4x4>.toFloat4x4Array(): Float4x4Array {
+    val result = Float4x4Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
+}

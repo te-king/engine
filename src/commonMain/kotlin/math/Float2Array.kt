@@ -46,3 +46,9 @@ fun Collection<Float2>.toFloat2Array(): Float2Array {
     this.forEachIndexed { i, f -> result[i] = f }
     return result
 }
+
+fun Array<out Float2>.toFloat2Array(): Float2Array {
+    val result = Float2Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
+}

@@ -1,13 +1,15 @@
 import world.Scene
 import world.components.Transform
 
+import cglfw.*
+import com.kgl.glfw.Window
 
 fun main() {
 
-    val scene = Scene()
+    val window = glfwCreateWindow(640, 480, "Main Window", null, null)
 
-    val node = scene.addNode {
-        val transform = add(Transform::class)
+    while (glfwWindowShouldClose(window) == GLFW_FALSE) {
+        glfwPollEvents()
     }
 
 }

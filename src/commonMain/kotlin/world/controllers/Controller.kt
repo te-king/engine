@@ -12,6 +12,6 @@ abstract class Controller(val scene: Scene) {
         ReadOnlyProperty<Controller, Sequence<T>> { _, _ -> scene.componentsOfType<T>() }
 
     protected inline fun <reified T : Controller> controller(noinline ctor: (Scene) -> T) =
-        ReadOnlyProperty<Controller, T> { _, _ -> scene.getOrAdd(ctor) }
+        ReadOnlyProperty<Controller, T> { _, _ -> scene.getOrAdd(T::class, ctor) }
 
 }

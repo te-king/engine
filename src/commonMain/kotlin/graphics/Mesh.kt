@@ -1,13 +1,13 @@
 package graphics
 
-import math.Float4Array
+import math.Float4
 
 
 abstract class Mesh {
 
-    abstract val verticesList: List<Float4Array>
+    abstract val vertices: Sequence<Sequence<Float4>>
 
-    abstract val indiciesList: List<IntArray>
+    abstract val indicies: Sequence<Sequence<Int>>
 
 
     operator fun get(index: Int) = Submesh(this, index)

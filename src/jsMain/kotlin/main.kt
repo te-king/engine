@@ -4,8 +4,11 @@ import math.Color
 import math.Float3
 import physics.Container
 import world.Client
+import world.Node
+import world.Scene
 import world.components.*
 import world.controllers.*
+
 
 fun main() {
 
@@ -15,46 +18,46 @@ fun main() {
     /***
      * Controllers
      */
-    val graphicsContext = currentScene.getOrAdd(::GraphicsContext)
-    val input = currentScene.getOrAdd(::Input)
-    val physics = currentScene.getOrAdd(::PhysicsContext)
-    val renderer = currentScene.getOrAdd(::Renderer)
-    val standardShader = currentScene.getOrAdd(::StandardShader)
+    val graphicsContext = currentScene.getOrAdd(GraphicsContext::class, ::GraphicsContext)
+    val input = currentScene.getOrAdd(Input::class, ::Input)
+    val physics = currentScene.getOrAdd(PhysicsContext::class, ::PhysicsContext)
+    val renderer = currentScene.getOrAdd(Renderer::class, ::Renderer)
+    val standardShader = currentScene.getOrAdd(StandardShader::class, ::StandardShader)
 
     /***
      * Nodes
      */
-    val boxNode = currentScene.node()
+    val boxNode = currentScene.Node {
 
-    boxNode.apply {
-        val body = getOrAdd(::PhysicsBody)
+        val body = getOrAdd(PhysicsBody::class, ::PhysicsBody)
         body.static = true
         body.collider = Container
+
     }
 
 
-    val cameraNode = currentScene.node()
+    val cameraNode = currentScene.Node {
 
-    cameraNode.apply {
-        val transform = getOrAdd(::Transform)
-        val camera = getOrAdd(::Camera)
-        getOrAdd(::CameraControls)
+        val transform = getOrAdd(Transform::class, ::Transform)
+        val camera = getOrAdd(Camera::class, ::Camera)
+        getOrAdd(CameraControls::class, ::CameraControls)
         transform.translation = Float3(0f, 0f, 5f)
         renderer.currentCamera = camera
+
     }
 
 
-    val triangleNode = currentScene.node()
+    val triangleNode = currentScene.Node {
 
-    triangleNode.apply {
-        val transform = getOrAdd(::Transform)
-        val drawable = getOrAdd(::Drawable)
-        getOrAdd(::PhysicsBody)
+        val transform = getOrAdd(Transform::class, ::Transform)
+        val drawable = getOrAdd(Drawable::class, ::Drawable)
+        getOrAdd(PhysicsBody::class, ::PhysicsBody)
 
         transform.translation = Float3(0f, 20f, 0f)
         val mesh = graphicsContext.device.createMeshBufferObject(TriangleMesh) ?: error("Failed to create mesh buffer object")
         val material = standardShader.Material().also { it.diffuseColor = Color.green }
         drawable.pairs.add(mesh to material)
+
     }
 
 

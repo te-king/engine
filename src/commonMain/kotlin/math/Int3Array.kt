@@ -48,3 +48,9 @@ fun Collection<Int3>.toInt3Array(): Int3Array {
     this.forEachIndexed { i, f -> result[i] = f }
     return result
 }
+
+fun Array<out Int3>.toInt3Array(): Int3Array {
+    val result = Int3Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
+}

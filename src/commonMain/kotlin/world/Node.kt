@@ -6,12 +6,12 @@ import kotlin.reflect.KClass
 
 class Node(val scene: Scene) {
 
-    val componentMap = mutableMapOf<KClass<out Component>, Component>()
+    private val componentMap = mutableMapOf<KClass<out Component>, Component>()
     val components get() = componentMap.values.asSequence()
 
-    inline fun <reified T : Component> getOrAdd(noinline ctor: (Node) -> T) = componentMap.getOrPut(T::class) { ctor(this) } as T
-    inline fun <reified T : Component> get() = componentMap[T::class] as T?
-    inline fun <reified T : Component> contains() = componentMap.containsKey(T::class)
-    inline fun <reified T : Component> delete() = componentMap.remove(T::class) != null
+    fun <T : Component> getOrAdd(type: KClass<T>, ctor: (Node) -> T) = componentMap.getOrPut(type) { ctor(this) } as T
+    fun <T : Component> get(type: KClass<T>) = componentMap[type] as T?
+    fun <T : Component> contains(type: KClass<T>) = componentMap.containsKey(type)
+    fun <T : Component> delete(type: KClass<T>) = componentMap.remove(type) != null
 
 }

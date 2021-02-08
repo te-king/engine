@@ -6,13 +6,12 @@ import world.controllers.StandardShader
 import kotlin.random.Random
 
 
-val rand = Random(1234)
-
-
 class ContactEffect(node: Node) : Component(node), PhysicsBody.ContactHandler {
 
     private val drawable by component(::Drawable)
 
+
+    val rand = Random(1234)
 
     override fun contact(other: PhysicsBody, constant: Boolean) {
 

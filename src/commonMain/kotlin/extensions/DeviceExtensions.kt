@@ -21,19 +21,22 @@ fun <F : TextureFormat> Device.createImage2d(width: Long, height: Long, format: 
 
 fun Device.createMeshBufferObject(mesh: Mesh): MeshBufferObject? {
 
-    val vertices = mesh.verticesList.mapIndexedNotNull { index, float4Array ->
-        if (float4Array.size == 0) return@mapIndexedNotNull null
-        val buffer = createBuffer(float4Array, VertexBuffer, ServerBuffer) ?: return null
+    val vertices = mesh.vertices.mapIndexedNotNull { index, it ->
+        if (it.none()) return@mapIndexedNotNull null
+        val data = it.toList()
+        val buffer = createBuffer(data.toFloat4Array(), VertexBuffer, ServerBuffer) ?: return@mapIndexedNotNull null
         index to VertexBufferObject(buffer, Float4::class, 0, 0)
     }.toMap()
 
-    val indices = mesh.indiciesList.map {
-        val buffer = createBuffer(it, IndexBuffer, ServerBuffer) ?: return null
-        val count = it.size
+    val indices = mesh.indicies.mapNotNull {
+        if (it.none()) return@mapNotNull null
+        val data = it.toList()
+        val buffer = createBuffer(data.toIntArray(), IndexBuffer, ServerBuffer) ?: return@mapNotNull null
+        val count = data.size
         val kind = PrimitiveType.Triangles
         IndexBufferObject(buffer, count, kind)
     }
 
-    return MeshBufferObject(vertices, indices)
+    return MeshBufferObject(vertices, indices.toList())
 
 }

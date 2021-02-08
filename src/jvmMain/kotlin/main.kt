@@ -9,13 +9,15 @@ fun main() {
     val client = Client()
     val currentScene = client.currentScene
 
-    /***
-     * Controllers
-     */
-    val graphics = currentScene.getOrAdd(::GraphicsContext)
-    val input = currentScene.getOrAdd(::Input)
-    val physics = currentScene.getOrAdd(::PhysicsContext)
-    val renderer = currentScene.getOrAdd(::Renderer)
+
+
+//    /***
+//     * Controllers
+//     */
+//    val graphics = currentScene.getOrAdd(::GraphicsContext)
+//    val input = currentScene.getOrAdd(::Input)
+//    val physics = currentScene.getOrAdd(::PhysicsContext)
+//    val renderer = currentScene.getOrAdd(::Renderer)
 
 
     client.start()

@@ -50,3 +50,9 @@ fun Collection<Float4>.toFloat4Array(): Float4Array {
     this.forEachIndexed { i, f -> result[i] = f }
     return result
 }
+
+fun Array<out Float4>.toFloat4Array(): Float4Array {
+    val result = Float4Array(size)
+    this.forEachIndexed { i, f -> result[i] = f }
+    return result
+}
