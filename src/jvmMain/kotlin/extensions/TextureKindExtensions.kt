@@ -3,11 +3,11 @@ package extensions
 import graphics.RGB8
 import graphics.Texture2d
 import graphics.TextureFormat
-import graphics.TextureKind
+import graphics.TextureDimensions
 import org.lwjgl.opengl.GL46C.*
 
 
-val TextureKind.native
+val TextureDimensions.native
     get() = when (this) {
         Texture2d -> GL_TEXTURE_2D
     }

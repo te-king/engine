@@ -14,31 +14,62 @@ actual class Buffer<K : BufferKind, S : BufferStorage>(actual val device: Device
         val storage = this@Buffer.storage.native
     }
 
-    actual inline operator fun invoke(context: Context.() -> Unit) = Context().context()
-
 }
 
 
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray) {
-    glNamedBufferSubData(id, offset, ByteBuffer.wrap(data))
+@JvmName("invokeData")
+actual inline operator fun Buffer<DataKind, DynamicStorage>.invoke(context: Buffer<DataKind, DynamicStorage>.Context.() -> Unit) {
+    Context().let(context)
 }
 
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray) {
-    glNamedBufferSubData(id, offset, data)
+
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray) = glNamedBufferSubData(id, offset, ByteBuffer.wrap(data))
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: IntArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: LongArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataData")
+actual fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray) = glNamedBufferSubData(id, offset, data)
+
+
+@JvmName("invokeVertex")
+actual inline operator fun Buffer<VertexKind, DynamicStorage>.invoke(context: Buffer<VertexKind, DynamicStorage>.Context.() -> Unit) {
+    Context().let(context)
 }
 
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: IntArray) {
-    glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray) = glNamedBufferSubData(id, offset, ByteBuffer.wrap(data))
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: IntArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: LongArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataVertex")
+actual fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray) = glNamedBufferSubData(id, offset, data)
+
+
+@JvmName("invokeIndex")
+actual inline operator fun Buffer<IndexKind, DynamicStorage>.invoke(context: Buffer<IndexKind, DynamicStorage>.Context.() -> Unit) {
+    Context().let(context)
 }
 
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: LongArray) {
-    glNamedBufferSubData(id, offset, data)
-}
-
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray) {
-    glNamedBufferSubData(id, offset, data)
-}
-
-actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray) {
-    glNamedBufferSubData(id, offset, data)
-}
+//@JvmName("writeDataIndexBytes")
+//actual inline fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray) = glNamedBufferSubData(id, offset, ByteBuffer.wrap(data))
+//@JvmName("writeDataIndexBytes")
+//actual inline fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray) = glNamedBufferSubData(id, offset, data)
+@JvmName("writeDataIndex")
+actual fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: IntArray) = glNamedBufferSubData(id, offset, data)
+//@JvmName("writeDataIndexBytes")
+//actual inline fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: LongArray) = glNamedBufferSubData(id, offset, data)
+//@JvmName("writeDataIndexBytes")
+//actual inline fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray) = glNamedBufferSubData(id, offset, data)
+//@JvmName("writeDataIndexBytes")
+//actual inline fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray) = glNamedBufferSubData(id, offset, data)

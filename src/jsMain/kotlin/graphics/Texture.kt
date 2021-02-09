@@ -4,7 +4,7 @@ import extensions.native
 import org.khronos.webgl.WebGLTexture
 
 
-actual class Texture<F : TextureFormat, K : TextureKind>(actual val device: Device, val handle: WebGLTexture, val format: F, val kind: K) {
+actual class Texture<F : TextureFormat, K : TextureDimensions>(actual val device: Device, val handle: WebGLTexture, val format: F, val kind: K) {
 
     actual inner class Context {
         val device get() = this@Texture.device

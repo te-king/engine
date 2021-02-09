@@ -27,30 +27,30 @@ actual class DrawCommandBuffer(actual val device: Device, private val commands: 
 
         commands.add { device.context.enableVertexAttribArray(index) }
         when (type) {
-            Float::class -> commands.add {
-                buffer { device.context.vertexAttribPointer(index, 1, FLOAT, false, stride, offset.toInt()) }
-            }
-            Float2::class -> commands.add {
-                buffer { device.context.vertexAttribPointer(index, 2, FLOAT, false, stride, offset.toInt()) }
-            }
-            Float3::class -> commands.add {
-                buffer { device.context.vertexAttribPointer(index, 3, FLOAT, false, stride, offset.toInt()) }
-            }
-            Float4::class -> commands.add {
-                buffer { device.context.vertexAttribPointer(index, 4, FLOAT, false, stride, offset.toInt()) }
-            }
-            Int::class -> commands.add {
-                buffer { device.context.vertexAttribIPointer(index, 1, INT, stride.toLong(), offset) }
-            }
-            Int2::class -> commands.add {
-                buffer { device.context.vertexAttribIPointer(index, 2, INT, stride.toLong(), offset) }
-            }
-            Int3::class -> commands.add {
-                buffer { device.context.vertexAttribIPointer(index, 3, INT, stride.toLong(), offset) }
-            }
-            Int4::class -> commands.add {
-                buffer { device.context.vertexAttribIPointer(index, 4, INT, stride.toLong(), offset) }
-            }
+//            Float::class -> commands.add {
+//                buffer { device.context.vertexAttribPointer(index, 1, FLOAT, false, stride, offset.toInt()) }
+//            }
+//            Float2::class -> commands.add {
+//                buffer { device.context.vertexAttribPointer(index, 2, FLOAT, false, stride, offset.toInt()) }
+//            }
+//            Float3::class -> commands.add {
+//                buffer { device.context.vertexAttribPointer(index, 3, FLOAT, false, stride, offset.toInt()) }
+//            }
+//            Float4::class -> commands.add {
+//                buffer { device.context.vertexAttribPointer(index, 4, FLOAT, false, stride, offset.toInt()) }
+//            }
+//            Int::class -> commands.add {
+//                buffer { device.context.vertexAttribIPointer(index, 1, INT, stride.toLong(), offset) }
+//            }
+//            Int2::class -> commands.add {
+//                buffer { device.context.vertexAttribIPointer(index, 2, INT, stride.toLong(), offset) }
+//            }
+//            Int3::class -> commands.add {
+//                buffer { device.context.vertexAttribIPointer(index, 3, INT, stride.toLong(), offset) }
+//            }
+//            Int4::class -> commands.add {
+//                buffer { device.context.vertexAttribIPointer(index, 4, INT, stride.toLong(), offset) }
+//            }
         }
     }
 

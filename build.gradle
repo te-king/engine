@@ -13,7 +13,9 @@ kotlin {
         browser()
         binaries.executable()
     }
-    jvm {}
+    jvm {
+
+    }
 //    mingwX64("native") {
 //        binaries.executable()
 //    }

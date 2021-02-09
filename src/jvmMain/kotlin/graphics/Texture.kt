@@ -3,7 +3,7 @@ package graphics
 import extensions.native
 
 
-actual class Texture<F : TextureFormat, K : TextureKind>(actual val device: Device, val id: Int, val format: F, val kind: K) {
+actual class Texture<F : TextureFormat, K : TextureDimensions>(actual val device: Device, val id: Int, val format: F, val kind: K) {
 
     actual inner class Context {
         val device get() = this@Texture.device

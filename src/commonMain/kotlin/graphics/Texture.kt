@@ -1,7 +1,7 @@
 package graphics
 
 
-expect class Texture<F : TextureFormat, K : TextureKind> {
+expect class Texture<F : TextureFormat, K : TextureDimensions> {
 
     val device: Device
 

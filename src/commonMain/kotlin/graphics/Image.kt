@@ -1,4 +1,4 @@
 package graphics
 
 
-class Image<F: TextureFormat, K: TextureKind>(val texture: Texture<F, K>, val level: Int)
+class Image<F: TextureFormat, K: TextureDimensions>(val texture: Texture<F, K>, val level: Int)

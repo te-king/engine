@@ -3,12 +3,12 @@ package extensions
 import graphics.RGB8
 import graphics.Texture2d
 import graphics.TextureFormat
-import graphics.TextureKind
+import graphics.TextureDimensions
 import org.khronos.webgl.WebGL2RenderingContext
 import org.khronos.webgl.WebGLRenderingContext
 
 
-val TextureKind.native
+val TextureDimensions.native
     get() = when (this) {
         Texture2d -> WebGLRenderingContext.TEXTURE_2D
     }
