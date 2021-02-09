@@ -1,14 +1,15 @@
+import extensions.pairedPermutations
 import world.Client
 import world.Scene
 import world.controllers.*
+import kotlin.system.measureNanoTime
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 fun main() {
 
-    val client = Client()
-    val currentScene = client.currentScene
-
+//    val client = Client()
+//    val currentScene = client.currentScene
 
 
 //    /***
@@ -20,6 +21,6 @@ fun main() {
 //    val renderer = currentScene.getOrAdd(::Renderer)
 
 
-    client.start()
+//    client.start()
 
 }

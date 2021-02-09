@@ -5,7 +5,6 @@ import extensions.sizeOf
 import extensions.writeData
 import graphics.*
 import math.Color
-import math.Float4x4
 import world.Scene
 
 
@@ -115,7 +114,7 @@ actual class StandardShader actual constructor(scene: Scene) : Controller(scene)
 
     actual inner class Material() : graphics.Material {
 
-        private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataBuffer, DynamicBuffer) ?: error("failed to create material buffer")
+        private val buffer = graphicsContext.device.createBuffer(sizeOf(Color::class), DataKind, DynamicStorage) ?: error("failed to create material buffer")
 
 
         actual var diffuseColor = Color.white

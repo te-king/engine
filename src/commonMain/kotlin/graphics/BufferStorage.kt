@@ -2,6 +2,6 @@ package graphics
 
 
 sealed class BufferStorage
-object DynamicBuffer : BufferStorage()
-object ClientBuffer : BufferStorage()
-object ServerBuffer : BufferStorage()
+object DynamicStorage : BufferStorage()
+object ClientStorage : BufferStorage()
+object ServerStorage : BufferStorage()

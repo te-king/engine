@@ -19,26 +19,26 @@ actual class Buffer<K : BufferKind, S : BufferStorage>(actual val device: Device
 }
 
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: ByteArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray) {
     glNamedBufferSubData(id, offset, ByteBuffer.wrap(data))
 }
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: ShortArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray) {
     glNamedBufferSubData(id, offset, data)
 }
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: IntArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: IntArray) {
     glNamedBufferSubData(id, offset, data)
 }
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: LongArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: LongArray) {
     glNamedBufferSubData(id, offset, data)
 }
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: FloatArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray) {
     glNamedBufferSubData(id, offset, data)
 }
 
-actual fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: DoubleArray) {
+actual fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray) {
     glNamedBufferSubData(id, offset, data)
 }

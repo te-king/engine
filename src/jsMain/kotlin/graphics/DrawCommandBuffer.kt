@@ -15,11 +15,11 @@ import kotlin.reflect.KClass
 
 actual class DrawCommandBuffer(actual val device: Device, private val commands: MutableList<() -> Unit>) {
 
-    actual fun bindDataBuffer(index: Int, buffer: Buffer<DataBuffer, *>?) {
+    actual fun bindDataBuffer(index: Int, buffer: Buffer<DataKind, *>?) {
         commands.add { device.context.bindBufferBase(UNIFORM_BUFFER, index, buffer?.handle) }
     }
 
-    actual fun bindVertexBuffer(index: Int, buffer: Buffer<VertexBuffer, *>?, type: KClass<*>, offset: Long, stride: Int) {
+    actual fun bindVertexBuffer(index: Int, buffer: Buffer<VertexKind, *>?, type: KClass<*>, offset: Long, stride: Int) {
         if (buffer == null) {
             commands.add { device.context.disableVertexAttribArray(index) }
             return
@@ -54,7 +54,7 @@ actual class DrawCommandBuffer(actual val device: Device, private val commands: 
         }
     }
 
-    actual fun bindIndexBuffer(buffer: Buffer<IndexBuffer, *>?) {
+    actual fun bindIndexBuffer(buffer: Buffer<IndexKind, *>?) {
         commands.add { device.context.bindBuffer(ELEMENT_ARRAY_BUFFER, buffer?.handle) }
     }
 

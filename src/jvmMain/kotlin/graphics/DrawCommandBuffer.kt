@@ -5,15 +5,15 @@ import kotlin.reflect.KClass
 
 actual class DrawCommandBuffer(actual val device: Device, val commands: MutableList<() -> Unit>) {
 
-    actual fun bindDataBuffer(index: Int, buffer: Buffer<DataBuffer, *>?) {
+    actual fun bindDataBuffer(index: Int, buffer: Buffer<DataKind, *>?) {
 
     }
 
-    actual fun bindVertexBuffer(index: Int, buffer: Buffer<VertexBuffer, *>?, type: KClass<*>, offset: Long, stride: Int) {
+    actual fun bindVertexBuffer(index: Int, buffer: Buffer<VertexKind, *>?, type: KClass<*>, offset: Long, stride: Int) {
 
     }
 
-    actual fun bindIndexBuffer(buffer: Buffer<IndexBuffer, *>?) {
+    actual fun bindIndexBuffer(buffer: Buffer<IndexKind, *>?) {
 
     }
 

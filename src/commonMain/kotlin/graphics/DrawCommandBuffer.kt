@@ -9,11 +9,11 @@ expect class DrawCommandBuffer {
     val device: Device
 
 
-    fun bindDataBuffer(index: Int, buffer: Buffer<DataBuffer, *>?)
+    fun bindDataBuffer(index: Int, buffer: Buffer<DataKind, *>?)
 
-    fun bindVertexBuffer(index: Int, buffer: Buffer<VertexBuffer, *>?, type: KClass<*>, offset: Long, stride: Int)
+    fun bindVertexBuffer(index: Int, buffer: Buffer<VertexKind, *>?, type: KClass<*>, offset: Long, stride: Int)
 
-    fun bindIndexBuffer(buffer: Buffer<IndexBuffer, *>?)
+    fun bindIndexBuffer(buffer: Buffer<IndexKind, *>?)
 
     fun bindPipeline(pipeline: Pipeline?)
 

@@ -12,9 +12,9 @@ expect class Buffer<K : BufferKind, M : BufferStorage> {
 
 }
 
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: ByteArray)
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: ShortArray)
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: IntArray)
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: LongArray)
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: FloatArray)
-expect fun Buffer<*, DynamicBuffer>.Context.writeData(offset: Long, data: DoubleArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: IntArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: LongArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray)
+expect fun Buffer<*, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray)

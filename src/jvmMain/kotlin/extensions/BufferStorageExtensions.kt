@@ -1,16 +1,16 @@
 package extensions
 
 import graphics.BufferStorage
-import graphics.ClientBuffer
-import graphics.DynamicBuffer
-import graphics.ServerBuffer
+import graphics.ClientStorage
+import graphics.DynamicStorage
+import graphics.ServerStorage
 
 import org.lwjgl.opengl.GL46C.*
 
 
 val BufferStorage.native
     get() = when (this) {
-        DynamicBuffer -> GL_DYNAMIC_STORAGE_BIT
-        ClientBuffer -> GL_CLIENT_STORAGE_BIT
-        ServerBuffer -> 0
+        DynamicStorage -> GL_DYNAMIC_STORAGE_BIT
+        ClientStorage -> GL_CLIENT_STORAGE_BIT
+        ServerStorage -> 0
     }

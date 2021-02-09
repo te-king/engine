@@ -3,7 +3,7 @@ package graphics
 import kotlin.reflect.KClass
 
 
-enum class VertexKind(val type: KClass<*>) {
+enum class VertexType(val type: KClass<*>) {
     Float(Float::class),
     Float2(Float2::class),
     Float3(Float3::class),

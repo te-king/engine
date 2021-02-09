@@ -13,7 +13,7 @@ kotlin {
         browser()
         binaries.executable()
     }
-//    jvm {}
+    jvm {}
 //    mingwX64("native") {
 //        binaries.executable()
 //    }
@@ -28,6 +28,16 @@ kotlin {
             }
         }
         jsMain {}
+        jvmMain {
+            dependencies {
+                implementation "org.lwjgl:lwjgl:3.2.0"
+                implementation "org.lwjgl:lwjgl-glfw:3.2.0"
+                implementation "org.lwjgl:lwjgl-opengl:3.2.0"
+                runtimeOnly "org.lwjgl:lwjgl:3.2.0:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-glfw:3.2.0:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-opengl:3.2.0:natives-windows"
+            }
+        }
         nativeMain {
             dependencies {
                 implementation 'com.kgl:kgl-core:+'
