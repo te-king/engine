@@ -1,13 +1,12 @@
 package graphics
 
 
-expect class Shader<K: ShaderKind> {
+expect class Shader<K : ShaderKind> {
 
     val device: Device
 
-
     inner class Context
 
-    inline operator fun invoke(context: Context.() -> Unit)
-
 }
+
+expect inline operator fun <K : ShaderKind> Shader<K>.invoke(context: Shader<K>.Context.() -> Unit)

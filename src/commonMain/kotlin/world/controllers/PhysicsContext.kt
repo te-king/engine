@@ -68,25 +68,4 @@ class PhysicsContext(scene: Scene) : Controller(scene), Updatable {
 
     }
 
-
-    fun raycast(position: Float3, direction: Float3) =
-        sequence<RaycastHit> {
-
-        }
-
-
-    class RaycastHit
-
-
-//    fun test(): Boolean {
-//        val Q = SimpleVector(sphereOrigin)
-//        Q.sub(rayOrigin)
-//
-//        val c: Float = Q.length()
-//        val v: Float = Q.calcDot(rayDirection)
-//        val d: Float = sphereRadius * sphereRadius - (c * c - v * v)
-//
-//        return d >= 0.0
-//    }
-
 }

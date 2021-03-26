@@ -2,9 +2,13 @@ package world.controllers
 
 import graphics.Device
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL
+import org.lwjgl.opengl.GL11C.GL_VERSION
+import org.lwjgl.opengl.GL11C.glGetString
+import org.lwjgl.opengl.GLUtil
 import world.Scene
 import world.Updatable
 import java.util.concurrent.Executors
@@ -22,12 +26,13 @@ actual class GraphicsContext actual constructor(scene: Scene) : Controller(scene
 
     val window = glfwCreateWindow(640, 480, "Tempest Main Window", 0, 0)
 
-    val context = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    val context = newSingleThreadContext("GL.Thread")
 
     init {
         runBlocking(context) {
             glfwMakeContextCurrent(window)
             GL.createCapabilities()
+            GLUtil.setupDebugMessageCallback()
         }
     }
 

@@ -12,8 +12,10 @@ import world.Updatable
 
 class PhysicsBody(node: Node) : Component(node), Updatable {
 
-    val contactHandlers by components<ContactHandler>()
-    val transform by component(::Transform)
+    private val transform by component(::Transform)
+
+    private val contactHandlers by components<ContactHandler>()
+
 
 
     var collider: Collider = Sphere(1f)
@@ -35,9 +37,15 @@ class PhysicsBody(node: Node) : Component(node), Updatable {
         private set
 
 
+    /**
+     * The change in translation every second
+     */
     var translationDelta = Float3.zero
         get() = if (static) Float3.zero else field
 
+    /**
+     * The change in rotation every second
+     */
     var rotationDelta = Quaternion.identity
         get() = if (static) Quaternion.identity else field
 

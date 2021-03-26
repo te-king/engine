@@ -24,7 +24,7 @@ fun Device.createMeshBufferObject(mesh: Mesh): MeshBufferObject? {
     val vertices = mesh.vertices.mapIndexedNotNull { index, it ->
         if (it.none()) return@mapIndexedNotNull null
         val data = it.toList()
-        val buffer = createBuffer(data.toFloat4Array(), DataKind, ServerStorage) ?: return@mapIndexedNotNull null
+        val buffer = createBuffer(data.toFloat4Array(), VertexKind, ServerStorage) ?: return@mapIndexedNotNull null
         index to VertexBufferObject(buffer, Float4::class, 0, 0)
     }.toMap()
 

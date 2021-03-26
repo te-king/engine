@@ -9,10 +9,9 @@ expect class Pipeline {
 
     val fragmentShader: Shader<FragmentShader>
 
-
     inner class Context
 
-    inline operator fun invoke(context: Context.() -> Unit)
-
 }
+
+expect inline operator fun Pipeline.invoke(context: Pipeline.Context.() -> Unit)
 

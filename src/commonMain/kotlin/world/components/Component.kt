@@ -7,6 +7,12 @@ import world.controllers.Controller
 import kotlin.properties.ReadOnlyProperty
 
 
+/**
+ * A component represents a piece of logic that can be attached to a scene node.
+ * A node can only ever hold a single instance of any given component.
+ *
+ * @property scene a reference the top level scene this component is contained within
+ */
 abstract class Component(val node: Node) {
 
     val scene get() = node.scene

@@ -6,12 +6,13 @@ import graphics.MeshBufferObject
 import math.Color
 import world.Scene
 
+
 actual class StandardShader actual constructor(scene: Scene) : Controller(scene) {
 
     private val graphicsContext by controller(::GraphicsContext)
 
 
-    actual inner class Material : graphics.Material {
+    actual inner class FlatColor : Material {
 
         actual var diffuseColor: Color
             get() = TODO("Not yet implemented")

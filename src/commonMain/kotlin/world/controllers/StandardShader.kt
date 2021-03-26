@@ -6,7 +6,7 @@ import world.Scene
 
 expect class StandardShader(scene: Scene) : Controller {
 
-    inner class Material : graphics.Material {
+    inner class FlatColor : graphics.Material {
 
         var diffuseColor: Color
 

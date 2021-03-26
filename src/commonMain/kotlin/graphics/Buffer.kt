@@ -22,10 +22,6 @@ expect fun Buffer<DataKind, DynamicStorage>.Context.writeData(offset: Long, data
 
 expect inline operator fun Buffer<VertexKind, DynamicStorage>.invoke(context: Buffer<VertexKind, DynamicStorage>.Context.() -> Unit)
 
-expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: ByteArray)
-expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: ShortArray)
-expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: IntArray)
-expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: LongArray)
 expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: FloatArray)
 expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, data: DoubleArray)
 
@@ -33,8 +29,3 @@ expect fun Buffer<VertexKind, DynamicStorage>.Context.writeData(offset: Long, da
 expect inline operator fun Buffer<IndexKind, DynamicStorage>.invoke(context: Buffer<IndexKind, DynamicStorage>.Context.() -> Unit)
 
 expect fun Buffer<IndexKind, DynamicStorage>.Context.writeData(offset: Long, data: IntArray)
-
-
-expect class ArrayBuffer<T, K : BufferKind, M : BufferStorage> : Buffer<K, M> {
-
-}

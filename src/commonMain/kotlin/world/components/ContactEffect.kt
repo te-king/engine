@@ -17,7 +17,7 @@ class ContactEffect(node: Node) : Component(node), PhysicsBody.ContactHandler {
 
         if (!constant) return
 
-        for (mat in drawable.pairs.mapNotNull { it.second }.filterIsInstance<StandardShader.Material>()) {
+        for (mat in drawable.pairs.mapNotNull { it.second }.filterIsInstance<StandardShader.FlatColor>()) {
             mat.diffuseColor = Color(rand.nextFloat().rem(1f), rand.nextFloat().rem(1f), rand.nextFloat().rem(1f), rand.nextFloat().rem(1f))
         }
 

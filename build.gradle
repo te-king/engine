@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.4.30'
+    id 'org.jetbrains.kotlin.multiplatform' version '1.5.0-M1'
 }
 
 repositories {
@@ -9,10 +9,10 @@ repositories {
 }
 
 kotlin {
-    js(IR) {
-        browser()
-        binaries.executable()
-    }
+//    js(IR) {
+//        browser()
+//        binaries.executable()
+//    }
     jvm {
 
     }
@@ -29,24 +29,24 @@ kotlin {
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
             }
         }
-        jsMain {}
+//        jsMain {}
         jvmMain {
             dependencies {
-                implementation "org.lwjgl:lwjgl:3.2.0"
-                implementation "org.lwjgl:lwjgl-glfw:3.2.0"
-                implementation "org.lwjgl:lwjgl-opengl:3.2.0"
-                runtimeOnly "org.lwjgl:lwjgl:3.2.0:natives-windows"
-                runtimeOnly "org.lwjgl:lwjgl-glfw:3.2.0:natives-windows"
-                runtimeOnly "org.lwjgl:lwjgl-opengl:3.2.0:natives-windows"
+                implementation "org.lwjgl:lwjgl:3.2.2"
+                implementation "org.lwjgl:lwjgl-glfw:3.2.2"
+                implementation "org.lwjgl:lwjgl-opengl:3.2.2"
+                runtimeOnly "org.lwjgl:lwjgl:3.2.2:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-glfw:3.2.2:natives-windows"
+                runtimeOnly "org.lwjgl:lwjgl-opengl:3.2.2:natives-windows"
             }
         }
-        nativeMain {
-            dependencies {
-                implementation 'com.kgl:kgl-core:+'
-                implementation 'com.kgl:kgl-glfw:+'
-                implementation 'com.kgl:kgl-opengl:+'
-            }
-        }
+//        nativeMain {
+//            dependencies {
+//                implementation 'com.kgl:kgl-core:+'
+//                implementation 'com.kgl:kgl-glfw:+'
+//                implementation 'com.kgl:kgl-opengl:+'
+//            }
+//        }
         all {
             languageSettings {
                 languageVersion = '1.5'

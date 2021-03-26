@@ -28,7 +28,7 @@ value class Color(val vector: Float4) {
         val black = Color(0f, 0f, 0f, 1f)
         val white = Color(1f, 1f, 1f, 1f)
 
-        val transparent = Color(0f, 0f, 0f, 1f)
+        val transparent = Color(0f, 0f, 0f, 0f)
 
     }
 

@@ -15,6 +15,11 @@ import world.controllers.GraphicsContext
 import kotlin.properties.Delegates
 
 
+/**
+ * Represents a virtual camera within a scene.
+ * Does not directly render anything, as it simply contains
+ * field of view, aspect and plane clipping info.
+ */
 class Camera(node: Node) : Component(node) {
 
     private val graphicsContext by controller(::GraphicsContext)
@@ -47,6 +52,9 @@ class Camera(node: Node) : Component(node) {
         }
 
 
+    /**
+     * Attaches this Cameras transform and projection buffers to a given command buffe
+     */
     fun attach(commandBuffer: DrawCommandBuffer) {
         transform.worldMatrix
         projectionMatrix

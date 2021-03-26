@@ -18,7 +18,6 @@ class Scene {
     private val nodeSet = mutableSetOf<Node>()
     val nodes get() = nodeSet.asSequence()
 
-    @Suppress("FunctionName")
-    fun Node(builder: Node.() -> Unit) = Node(this).also(nodeSet::add).let(builder)
+    fun spawn() = Node(this).also(nodeSet::add)
 
 }

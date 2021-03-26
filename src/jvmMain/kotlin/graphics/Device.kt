@@ -77,15 +77,13 @@ actual class Device(val context: CoroutineDispatcher) {
             return@runBlocking Pipeline(this@Device, id, vertexShader, fragmentShader)
         }
 
-    actual fun createDrawCommandBuffer(deviceState: DeviceState): DrawCommandBuffer? =
-        runBlocking(context) {
+    actual fun createDrawCommandBuffer(deviceState: DeviceState): DrawCommandBuffer? {
+        val commands = mutableListOf<() -> Unit>()
 
-            val commands = mutableListOf<() -> Unit>()
-
-            commands.add {
-                glBindFramebuffer(GL_READ_FRAMEBUFFER, deviceState.readFramebuffer?.id ?: 0)
-                glBindFramebuffer(GL_DRAW_FRAMEBUFFER, deviceState.writeFramebuffer?.id ?: 0)
-            }
+        commands.add {
+            glBindFramebuffer(GL_READ_FRAMEBUFFER, deviceState.readFramebuffer?.id ?: 0)
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, deviceState.writeFramebuffer?.id ?: 0)
+        }
 
 //            if (deviceState.cullFunc != null)
 //                commands.add {
@@ -118,8 +116,8 @@ actual class Device(val context: CoroutineDispatcher) {
 //                    context.disable(WebGL2RenderingContext.DEPTH_TEST)
 //                }
 
-            DrawCommandBuffer(this@Device, commands)
+        return DrawCommandBuffer(this@Device, commands)
 
-        }
+    }
 
 }

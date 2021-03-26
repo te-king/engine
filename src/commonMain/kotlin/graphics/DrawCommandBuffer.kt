@@ -11,7 +11,7 @@ expect class DrawCommandBuffer {
 
     fun bindDataBuffer(index: Int, buffer: Buffer<DataKind, *>?)
 
-    fun bindVertexBuffer(index: Int, buffer: Buffer<DataKind, *>?, type: KClass<*>, offset: Long, stride: Int)
+    fun bindVertexBuffer(index: Int, buffer: VertexBufferObject?)
 
     fun bindIndexBuffer(buffer: Buffer<IndexKind, *>?)
 

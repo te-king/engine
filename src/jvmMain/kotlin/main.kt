@@ -1,14 +1,8 @@
-import extensions.pairedPermutations
-import extensions.writeData
-import graphics.DataKind
-import graphics.DynamicStorage
-import graphics.invoke
-import graphics.writeData
-import math.int3ArrayOf
 import world.Client
-import world.Scene
+import world.components.Camera
+import world.components.Drawable
+import world.components.Transform
 import world.controllers.*
-import kotlin.system.measureNanoTime
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -24,15 +18,14 @@ fun main() {
     val graphics = currentScene.getOrAdd(GraphicsContext::class, ::GraphicsContext)
 //    val input = currentScene.getOrAdd(::Input)
 //    val physics = currentScene.getOrAdd(::PhysicsContext)
-//    val renderer = currentScene.getOrAdd(::Renderer)
+    val renderer = currentScene.getOrAdd(Renderer::class, ::Renderer)
 
-    val buf = graphics.device.createBuffer(100, DataKind, DynamicStorage) ?: return
+    val cameraNode = currentScene.spawn()
+    val camera = cameraNode.getOrAdd(Camera::class, ::Camera)
 
-    buf {
-        writeData(0, intArrayOf(1, 2, 3))
-    }
+    val triangleNode = currentScene.spawn()
+    val drawable = triangleNode.getOrAdd(Drawable::class, ::Drawable)
 
-
-//    client.start()
+    client.start()
 
 }
