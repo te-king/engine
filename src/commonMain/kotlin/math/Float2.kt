@@ -11,9 +11,6 @@ data class Float2(val x: Float, val y: Float) {
     }
 
 
-    constructor() : this(0f, 0f)
-
-
     val lengthSquared get() = x * x + y * y
     val length get() = sqrt(lengthSquared)
     val normalized get() = this / length

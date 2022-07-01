@@ -9,9 +9,6 @@ data class Int2(val x: Int, val y: Int) {
     }
 
 
-    constructor() : this(0, 0)
-
-
     fun toIntArray() = intArrayOf(x, y)
 
 

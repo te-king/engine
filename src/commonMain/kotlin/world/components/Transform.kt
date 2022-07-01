@@ -15,7 +15,7 @@ class Transform(node: Node) : Component(node) {
 
     private val graphicsContext by controller(::GraphicsContext)
 
-    private val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class, Float4x4::class), DataKind, DynamicStorage) ?: error("Failed to create Transform buffer")
+    val buffer = graphicsContext.device.createBuffer(sizeOf(Float4x4::class, Float4x4::class), DataKind, DynamicStorage) ?: error("Failed to create Transform buffer")
 
 
     /**

@@ -1,31 +1,24 @@
-import world.Client
-import world.components.Camera
-import world.components.Drawable
-import world.components.Transform
-import world.controllers.*
+import ecs.NaiveMapBackend
+import ecs.system
 import kotlin.time.ExperimentalTime
+
+
+data class Label(val v: String)
+
+object Enabled
+
 
 @ExperimentalTime
 fun main() {
 
-    val client = Client()
-    val currentScene = client.currentScene
+    val s1 = system<Label, Enabled> { l, _ ->
+        println("$l ($entity)")
+    }
 
 
-//    /***
-//     * Controllers
-//     */
-    val graphics = currentScene.getOrAdd(GraphicsContext::class, ::GraphicsContext)
-//    val input = currentScene.getOrAdd(::Input)
-//    val physics = currentScene.getOrAdd(::PhysicsContext)
-    val renderer = currentScene.getOrAdd(Renderer::class, ::Renderer)
+    val b = NaiveMapBackend()
+    b.spawn(Label("Title"), Enabled)
+    b.spawn(Label("Title 2"), Enabled)
 
-    val cameraNode = currentScene.spawn()
-    val camera = cameraNode.getOrAdd(Camera::class, ::Camera)
-
-    val triangleNode = currentScene.spawn()
-    val drawable = triangleNode.getOrAdd(Drawable::class, ::Drawable)
-
-    client.start()
-
+    b.run(s1)
 }

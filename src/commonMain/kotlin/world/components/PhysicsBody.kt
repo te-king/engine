@@ -12,9 +12,9 @@ import world.Updatable
 
 class PhysicsBody(node: Node) : Component(node), Updatable {
 
-    private val transform by component(::Transform)
+    val transform by component(::Transform)
 
-    private val contactHandlers by components<ContactHandler>()
+    val contactHandlers by components<ContactHandler>()
 
 
 
