@@ -1,5 +1,11 @@
 package ecs
 
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlin.reflect.KClass
 
 
@@ -7,45 +13,63 @@ class NaiveMapBackend : Backend {
 
     private var counter = 0UL
 
-    private val componentTable = mutableMapOf<KClass<out Any>, MutableMap<Entity, Any>>()
+    private val table = mutableMapOf<KClass<out Any>, MutableMap<Entity, Any>>()
 
 
-    override val entities get() = componentTable.flatMap { it.value.keys }.asSequence().distinct()
+    override val entities get() = table.flatMap { it.value.keys }.asSequence().distinct()
 
 
     override fun spawn(vararg components: Any): Entity {
         val result = Entity(counter++)
-        for (component in components) componentTable.getOrPut(component::class, ::mutableMapOf)[result] = component
+        for (component in components) table.getOrPut(component::class, ::mutableMapOf)[result] = component
         return result
     }
 
-    override fun destroy(entity: Entity): Boolean = componentTable.values.any { it.remove(entity) != null }
+    override fun destroy(entity: Entity): Boolean = table.values.any { it.remove(entity) != null }
 
 
-    override fun run(systems: List<System>) {
+    override suspend fun run(systems: List<System>) {
+
+//        for (system in systems) {
+//
+//            val columns = system
+//                .args
+//                .zip(system.optional.asIterable())
+//                .map { table[it.first] to it.second }
+//                .let {
+//                }
+//
+//        }
+
         for (system in systems) {
-            for (entity in entities) {
+            e@ for (entity in entities) {
 
-                val args = system.args.map { componentTable[it]!![entity] }
+                val args = mutableListOf<Any?>()
 
-                if (null in args) continue
+                for ((k, n) in system.args.zip(system.optional.asIterable()))
+                    args += when (n) {
+                        true -> table[k]?.get(entity)
+                        false -> table[k]?.get(entity) ?: continue@e
+                    }
 
-                val s = object : SystemScope {
-                    override val entity get() = entity
-                }
-
-                system(s, args.filterNotNull().toTypedArray())
+                system(entity, args.toTypedArray())
+                    .distinctUntilChangedBy { it::class }
+                    .buffer(1, BufferOverflow.DROP_OLDEST)
+                    .conflate()
+                    .collect {
+                        println("$it changed for $entity")
+                    }
 
             }
         }
     }
 
     override fun contains(component: KClass<out Any>): Boolean {
-        return componentTable.contains(component)
+        return table.contains(component)
     }
 
     override fun contains(entity: Entity): Boolean {
-        return componentTable.any { (k, v) -> v.contains(entity) }
+        return table.any { (k, v) -> v.contains(entity) }
     }
 
 }

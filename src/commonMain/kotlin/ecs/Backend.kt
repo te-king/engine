@@ -11,7 +11,7 @@ interface Backend {
 
     fun destroy(entity: Entity): Boolean
 
-    fun run(systems: List<System>)
+    suspend fun run(systems: List<System>)
 
 
     operator fun contains(entity: Entity): Boolean

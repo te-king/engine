@@ -1,41 +1,36 @@
 package ecs
 
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 
 interface System {
-    val args: Array<KClass<out Any>>
-    operator fun invoke(scope: SystemScope, args: Array<Any>)
-}
-
-interface SystemScope {
-    val entity: Entity
+    val args: Array<KClass<*>>
+    val optional: BooleanArray
+    operator fun invoke(entity: Entity, args: Array<*>): Flow<Any>
 }
 
 
-@Target(AnnotationTarget.TYPE)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Added
-
-@Target(AnnotationTarget.TYPE)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Changed
-
-
-inline fun system(crossinline fn: SystemScope.() -> Unit) =
+inline fun system(noinline fn: suspend ProducerScope<Any>.(Entity) -> Unit) =
     object : System {
-        override val args = emptyArray<KClass<out Any>>()
-        override fun invoke(scope: SystemScope, args: Array<Any>) = scope.fn()
+        override val args = emptyArray<KClass<*>>()
+        override val optional = booleanArrayOf()
+        override fun invoke(entity: Entity, args: Array<*>) = channelFlow { fn(entity) }
     }
 
-inline fun <reified C0 : Any> system(crossinline fn: SystemScope.(C0) -> Unit) =
+inline fun <reified C0> system(noinline fn: suspend ProducerScope<Any>.(Entity, C0) -> Unit) =
     object : System {
-        override val args = arrayOf<KClass<out Any>>(C0::class)
-        override fun invoke(scope: SystemScope, args: Array<Any>) = scope.fn(args[0] as C0)
+        override val args = arrayOf<KClass<*>>(C0::class)
+        override val optional = booleanArrayOf(typeOf<C0>().isMarkedNullable)
+        override fun invoke(entity: Entity, args: Array<*>) = channelFlow { fn(entity, args[0] as C0) }
     }
 
-inline fun <reified C0 : Any, reified C1 : Any> system(noinline fn: SystemScope.(C0, C1) -> Unit) =
+inline fun <reified C0, reified C1> system(noinline fn: suspend ProducerScope<Any>.(Entity, C0, C1) -> Unit) =
     object : System {
-        override val args = arrayOf<KClass<out Any>>(C0::class, C1::class)
-        override fun invoke(scope: SystemScope, args: Array<Any>) = scope.fn(args[0] as C0, args[1] as C1)
+        override val args = arrayOf<KClass<*>>(C0::class, C1::class)
+        override val optional = booleanArrayOf(typeOf<C0>().isMarkedNullable, typeOf<C1>().isMarkedNullable)
+        override fun invoke(entity: Entity, args: Array<*>) = channelFlow { fn(entity, args[0] as C0, args[1] as C1) }
     }
