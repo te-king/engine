@@ -14,6 +14,10 @@ kotlin {
 
     }
 
+//    mingwX64("native") {
+//
+//    }
+
 //    js(IR) {
 //        browser()
 //        binaries.executable()

@@ -1,24 +1,39 @@
+import ecs.Added
+import ecs.Changed
 import ecs.NaiveMapBackend
 import ecs.system
-import kotlin.time.ExperimentalTime
 
 
-data class Label(val v: String)
+data class Label(val v: String) {
+    override fun toString() = v
+}
 
-object Enabled
+enum class State {
+    Enabled,
+    Disabled
+}
 
 
-@ExperimentalTime
+data class GraphicsWindow(val handle: Long)
+
+data class GraphicsStep(val counter: Long, val delta: Double)
+
+
 fun main() {
 
-    val s1 = system<Label, Enabled> { l, _ ->
-        println("$l ($entity)")
+    val debugStateChange = system<Label, @Added @Changed State> { label, state ->
+        println("$label:${entity.id} changed to $state")
+    }
+
+    val clearFrame = system<GraphicsWindow, @Changed GraphicsStep> { window, graphics ->
+        // window set title to frame count
+        // window clear with context
     }
 
 
     val b = NaiveMapBackend()
-    b.spawn(Label("Title"), Enabled)
-    b.spawn(Label("Title 2"), Enabled)
+    b.spawn(Label("First"), State.Enabled)
+    b.spawn(Label("Second"), State.Disabled)
 
-    b.run(s1)
+    b.run(listOf(debugStateChange))
 }

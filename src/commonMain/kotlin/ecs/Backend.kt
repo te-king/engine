@@ -4,28 +4,18 @@ import kotlin.reflect.KClass
 
 
 interface Backend {
+
+    val entities: Sequence<Entity>
+
     fun spawn(vararg components: Any): Entity
-    fun remove(entity: Entity): Boolean
-    fun entities(): Sequence<ULong>
 
-    fun <C : Any> has(id: ULong, key: KClass<C>): Boolean
-    fun <C : Any> get(id: ULong, key: KClass<C>): C?
+    fun destroy(entity: Entity): Boolean
 
-    fun run(vararg systems: System) {
-        for (system in systems) {
-            for (entity in entities()) {
+    fun run(systems: List<System>)
 
-                val args = system.args.map { get(entity, it) }
 
-                if (null in args) continue
+    operator fun contains(entity: Entity): Boolean
 
-                val s = object : SystemScope {
-                    override val entity = Entity(entity)
-                }
+    operator fun contains(component: KClass<out Any>): Boolean
 
-                system(s, *args.filterNotNull().toTypedArray())
-
-            }
-        }
-    }
 }
