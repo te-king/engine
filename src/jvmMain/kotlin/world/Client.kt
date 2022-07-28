@@ -1,32 +1,30 @@
 package world
 
-import extensions.componentsOfType
-import extensions.controllersOfType
-import kotlin.time.ExperimentalTime
-import kotlin.time.TimeSource
+import ecs.ArchetypeBackend
+import ecs.System
+import kotlinx.coroutines.runBlocking
+import kotlin.concurrent.fixedRateTimer
+
 
 actual class Client {
 
     private var shouldClose = false
 
-    actual var currentScene = Scene()
+    actual var currentBackend = ArchetypeBackend()
 
     actual fun exit() {
         shouldClose = true
     }
 
-    @ExperimentalTime
-    actual fun start() {
-
-        var mark = TimeSource.Monotonic.markNow()
-
-        while (!shouldClose) {
-            for (updatable in currentScene.controllersOfType<Updatable>()) updatable.update(mark.elapsedNow().inSeconds)
-            for (updatable in currentScene.componentsOfType<Updatable>()) updatable.update(mark.elapsedNow().inSeconds)
-            mark = TimeSource.Monotonic.markNow()
-            Thread.sleep(5)
+    actual fun start(systems: List<System>) {
+        fixedRateTimer(period = 1000) {
+            if (shouldClose) return@fixedRateTimer
+            currentBackend.resources[Double::class] = scheduledExecutionTime().toDouble() * 0.001
+            runBlocking {
+                currentBackend.run(systems)
+            }
+            this.scheduledExecutionTime()
         }
-
     }
 
 }

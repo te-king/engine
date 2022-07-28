@@ -1,12 +1,12 @@
-import ecs.NaiveMapBackend
-import ecs.system
-import kotlinx.coroutines.runBlocking
-import kotlin.reflect.KClass
+import ecs.*
+import kotlinx.coroutines.*
+import math.Float3
+import world.Client
+import world.components.Label
+import world.components.PhysicsBody
+import world.components.Transform
+import kotlin.concurrent.fixedRateTimer
 
-
-data class Label(val v: String) {
-    override fun toString() = v
-}
 
 enum class State {
     Enabled,
@@ -14,29 +14,32 @@ enum class State {
 }
 
 
-data class GraphicsWindow(val handle: Long)
-
-data class GraphicsStep(val counter: Long, val delta: Double)
-
-
 fun main() {
 
-    var i = 0
+    val client = Client()
 
-    val tester = system<State> { _, state ->
-        when (state) {
-            State.Enabled -> send(Label("Enabled"))
-            State.Disabled -> send(Label("Disabled"))
-        }
-        i++
+
+    client.currentBackend.spawn(Label("Entity 1"), Transform(), PhysicsBody(positionDelta = Float3.up))
+
+
+    val updateTransformSystem = system(Exists<Transform>(), Exists<PhysicsBody>()) { transform, physicsBody ->
+        addOrUpdate(
+            Transform(
+                transform.position + physicsBody.positionDelta,
+                transform.rotation * physicsBody.rotationDelta,
+                transform.scale
+            )
+        )
     }
 
-    val b = NaiveMapBackend()
-    b.spawn(Label("First"), State.Enabled)
-    b.spawn(Label("Second"), State.Enabled)
-    b.spawn(Label("Second"))
-
-    runBlocking {
-        b.run(listOf(tester, tester))
+    val deltaDebugSystem = system(Exists<Double>()) {
+        println(it)
     }
+
+    val debugTransformSystem = system(Exists<Transform>()) {
+        println(it)
+    }
+
+    client.start(listOf(updateTransformSystem, debugTransformSystem, deltaDebugSystem))
+
 }

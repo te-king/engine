@@ -1,14 +1,17 @@
 package world
 
+import ecs.ArchetypeBackend
+import ecs.System
+
 
 expect class Client {
 
-    var currentScene: Scene
+    var currentBackend: ArchetypeBackend
 
 
     fun exit()
 
-    fun start()
+    fun start(systems: List<System>)
 
 }
 
